@@ -14,6 +14,13 @@ return [
     'modules' => [],
     'homeUrl' => '/admin',
     'components' => [
+        'view' => [
+            'theme' => [
+                'pathMap' => [
+                    '@app/views' => '@app/views/admin-LTE',
+                ],
+            ],
+        ],
         'request' => [
             'baseUrl'=>'/admin',
             'csrfParam' => '_csrf-backend',
