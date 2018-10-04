@@ -1,0 +1,22 @@
+RewriteEngine On
+ 
+# rewrite for the frontend  - основной редирект в frontend/web
+RewriteCond %{REQUEST_URI} !^/(backend/web|admin)
+RewriteRule !^frontend/web /frontend/web%{REQUEST_URI} [L]
+ 
+# rewrite for the backend - все что начинается с /admin редиректится в /backend/web
+RewriteCond %{REQUEST_URI} ^/admin
+RewriteRule ^admin(.*) /backend/web/$1 [L]
+ 
+# if under frontend/web file or directory exists - take it - если в frontend/web папка или файл существуют - берем их
+RewriteCond %{REQUEST_URI} ^/frontend/web
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+# otherwise forward to index.php - все остальное отправляется на index.php во фронтенде (все что начинается с frontend/web)
+RewriteRule . /frontend/web/index.php [L]
+ 
+# same for backend - то же самое, но для бэкенда
+RewriteCond %{REQUEST_URI} ^/backend/web
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /backend/web/index.php [L]
