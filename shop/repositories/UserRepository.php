@@ -2,7 +2,7 @@
 
 namespace shop\repositories;
 
-use shop\entities\User;
+use shop\entities\User\User;
 
 class UserRepository
 {
@@ -45,4 +45,20 @@ class UserRepository
         return User::find()->andWhere(['or', ['username' => $value], ['email' => $value]])->one();
     }
 
+    public function findByNetworkIdentity($network, $identity)
+    {
+        return User::find()->joinWith('networks n')->andWhere(['n.network' => $network, 'n.identity' => $identity])->one();
+    }
+
+    public function get($id): User
+    {
+        return $this->getBy(['id' => $id]);
+    }
+
+    public function remove(User $user): void
+    {
+        if (!$user->delete()) {
+            throw new \RuntimeException('Removing error.');
+        }
+    }
 }
