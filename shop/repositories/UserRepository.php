@@ -40,7 +40,7 @@ class UserRepository
         return $user;
     }
 
-    public function findByUsernameOrEmail($value): User
+    public function findByUsernameOrEmail($value): ?User
     {
         return User::find()->andWhere(['or', ['username' => $value], ['email' => $value]])->one();
     }
