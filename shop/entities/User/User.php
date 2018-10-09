@@ -65,6 +65,12 @@ class User extends ActiveRecord implements IdentityInterface
         return $user;
     }
 
+    public function editProfile(string $email): void
+    {
+        $this->email = $email;
+        $this->updated_at = time();
+    }
+
     public function confirmSignup()
     {
         if (!$this->isWait()) {
