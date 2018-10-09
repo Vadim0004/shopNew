@@ -28,13 +28,17 @@
 
         <?= dmstr\widgets\Menu::widget(
             [
-                'options' => ['class' => 'sidebar-menu'],
+                'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],
                 'items' => [
                     ['label' => 'Management', 'options' => ['class' => 'header']],
+                    ['label' => 'Shop', 'icon' => 'folder', 'items' => [
+                        ['label' => 'Tags', 'icon' => 'file-o', 'url' => ['/shop/tag/index'], 'active' => $this->context->id == 'shop/tag'],
+                    ]],
                     ['label' => 'Users', 'icon' => 'user', 'url' => ['/user/index'], 'active' => $this->context->id == 'user/index'],
                 ],
             ]
         ) ?>
+
 
     </section>
 
