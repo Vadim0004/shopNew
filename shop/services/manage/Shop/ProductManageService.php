@@ -2,18 +2,19 @@
 
 namespace shop\services\manage\Shop;
 
-use shop\entities\Shop\Tag;
+use shop\entities\Shop\Product\Photo;
 use shop\forms\manage\Shop\Product\CategoriesForm;
 use shop\repositories\Shop\BrandRepository;
 use shop\repositories\Shop\CategoryRepository;
 use shop\repositories\Shop\ProductRepository;
-use shop\entities\Meta;
-use shop\forms\manage\Shop\Product\ProductCreateForm;
-use shop\entities\Shop\Product\Product;
-use shop\forms\manage\Shop\Product\PhotosForm;
 use shop\repositories\Shop\TagRepository;
-use shop\services\TransactionManager;
+use shop\entities\Shop\Tag;
+use shop\entities\Meta;
+use shop\entities\Shop\Product\Product;
+use shop\forms\manage\Shop\Product\ProductCreateForm;
+use shop\forms\manage\Shop\Product\PhotosForm;
 use shop\forms\manage\Shop\Product\ProductEditForm;
+use shop\services\TransactionManager;
 
 class ProductManageService
 {
@@ -83,9 +84,6 @@ class ProductManageService
                 }
                 $product->assignTag($tag->id);
             }
-
-
-
             $this->productRepository->save($product);
         });
 
@@ -163,8 +161,9 @@ class ProductManageService
     public function addPhotos($id, PhotosForm $form): void
     {
         $product = $this->productRepository->get($id);
-        foreach ($form->files as $file) {
-            $product->addPhoto($file);
+        foreach ($form->files as $photo) {
+            $photo = Photo::createNewPhoto($photo, $product->id);
+            $photo->save();
         }
         $this->productRepository->save($product);
     }

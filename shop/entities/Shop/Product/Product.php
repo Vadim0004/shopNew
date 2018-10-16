@@ -25,6 +25,7 @@ use yii\web\UploadedFile;
  * @property int $price_old
  * @property int $price_new
  * @property string $rating
+ * @property integer $main_photo_id
  * @property string $meta_json
  *
  * @property Meta $meta

@@ -14,6 +14,7 @@ use yii\web\UploadedFile;
  * @property string $file
  * @property int $sort
  *
+ * @property Product $products
  * @mixin ImageUploadBehavior
  */
 class Photo extends ActiveRecord
@@ -23,6 +24,15 @@ class Photo extends ActiveRecord
     {
         $photo = new static();
         $photo->file = $file;
+        return $photo;
+    }
+
+    public static function createNewPhoto(UploadedFile $file, $productId): self
+    {
+        $photo = new static();
+        $photo->product_id = $productId;
+        $photo->file = $file;
+        $photo->sort = random_int(1, 2);
         return $photo;
     }
 
@@ -45,18 +55,25 @@ class Photo extends ActiveRecord
     {
         return [
             [
-                'class' => ImageUploadBehavior::className(),
+                'class' => ImageUploadBehavior::class,
                 'attribute' => 'file',
                 'createThumbsOnRequest' => true,
-                'filePath' => "@common/upload/origin/products/[[attribute_product_id]]/[[id]].[[extension]]",
-                'fileUrl' => "@common/upload/origin/products/[[attribute_product_id]]/[[id]].[[extension]]",
-                'thumbPath' => "@common/upload/cache/products/[[attribute_product_id]]/[[profile]]_[[id]].[[extension]]",
-                'thumbUrl' => "@common/upload/cache/products/[[attribute_product_id]]/[[profile]]_[[id]].[[extension]]",
+                'filePath' => "@webroot/upload/origin/products/[[attribute_product_id]]/[[id]].[[extension]]",
+                'fileUrl' => "/backend/web/upload/origin/products/[[attribute_product_id]]/[[id]].[[extension]]",
+                'thumbPath' => "@webroot/upload/cache/products/[[attribute_product_id]]/[[profile]]_[[id]].[[extension]]",
+                'thumbUrl' => "/backend/web/upload/cache/products/[[attribute_product_id]]/[[profile]]_[[id]].[[extension]]",
                 'thumbs' => [
                     'admin' => ['width' => 100, 'height' => 70],
                     'thumb' => ['width' => 640, 'height' => 480],
                 ],
             ],
         ];
+    }
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getProducts()
+    {
+        return $this->hasOne(Product::class, ['id' => 'product_id']);
     }
 }
