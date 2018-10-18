@@ -124,6 +124,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ]); ?>
         </div>
     </div>
+
     <div class="box">
         <div class="box-header with-border">SEO</div>
         <div class="box-body">
@@ -146,11 +147,12 @@ $this->params['breadcrumbs'][] = $this->title;
             ]) ?>
         </div>
     </div>
+
     <div class="box" id="photos">
         <div class="box-header with-border">Photos</div>
         <div class="box-body">
             <div class="row">
-                <?php foreach ($product->photos as $photo): ?>
+                <?php foreach ($product->images as $photo): ?>
                     <div class="col-md-2 col-xs-3" style="text-align: center">
                         <div class="btn-group">
                             <?= Html::a('<span class="glyphicon glyphicon-arrow-left"></span>', ['move-photo-up', 'id' => $product->id, 'photo_id' => $photo->id], [

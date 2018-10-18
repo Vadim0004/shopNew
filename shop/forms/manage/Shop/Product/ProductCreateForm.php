@@ -11,7 +11,6 @@ use yii\helpers\ArrayHelper;
 
 /**
  * @property PriceForm $price
- * @property QuantityForm $quantity
  * @property MetaForm $meta
  * @property CategoriesForm $categories
  * @property PhotosForm $photos
@@ -51,7 +50,7 @@ class ProductCreateForm extends CompositeForm
 
     protected function internalForms(): array
     {
-        return ['price', 'quantity', 'meta', 'photos', 'categories', 'tags', 'values'];
+        return ['price', 'meta', 'photos', 'categories', 'tags', 'values'];
     }
 
     public function brandsList(): array

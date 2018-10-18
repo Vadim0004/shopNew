@@ -27,15 +27,6 @@ class Photo extends ActiveRecord
         return $photo;
     }
 
-    public static function createNewPhoto(UploadedFile $file, $productId): self
-    {
-        $photo = new static();
-        $photo->product_id = $productId;
-        $photo->file = $file;
-        $photo->sort = random_int(1, 2);
-        return $photo;
-    }
-
     public function setSort($sort): void
     {
         $this->sort = $sort;

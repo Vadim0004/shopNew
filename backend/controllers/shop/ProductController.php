@@ -96,7 +96,7 @@ class ProductController extends Controller
     public function actionCreate()
     {
         $form = new ProductCreateForm();
-        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+        if (Yii::$app->request->isPost && $form->load(Yii::$app->request->post()) && $form->validate()) {
             try {
                 $product = $this->productManageService->create($form);
                 return $this->redirect(['view', 'id' => $product->id]);
@@ -206,7 +206,7 @@ class ProductController extends Controller
     public function actionDeletePhoto($id, $photo_id)
     {
         try {
-            $this->productManageService->removePhoto($id, $photo_id);
+            $this->productManageService->removePhotos($id, $photo_id);
         } catch (\DomainException $e) {
             Yii::$app->session->setFlash('error', $e->getMessage());
         }

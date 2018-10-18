@@ -38,7 +38,7 @@ use yii\web\UploadedFile;
  * @property RelatedAssignment[] $relatedAssignments
  * @property Modification[] $modifications
  * @property Value[] $values
- * @property Photo[] $photos
+ * @property Photo[] $images
  * @property Photo $mainPhoto
  * @property Review[] $reviews
  */
@@ -127,14 +127,14 @@ class Product extends ActiveRecord
 
     public function addPhoto(UploadedFile $file): void
     {
-        $photos = $this->photos;
+        $photos = $this->images;
         $photos[] = Photo::create($file);
         $this->updatePhotos($photos);
     }
 
     public function removePhoto($id): void
     {
-        $photos = $this->photos;
+        $photos = $this->images;
         foreach ($photos as $i => $photo) {
             if ($photo->isIdEqualTo($id)) {
                 unset($photos[$i]);
@@ -150,13 +150,13 @@ class Product extends ActiveRecord
         foreach ($photos as $i => $photo) {
             $photo->setSort($i);
         }
-        $this->photos = $photos;
+        $this->images = $photos;
         $this->populateRelation('mainPhoto', reset($photos));
     }
 
     public function movePhotoUp($id): void
     {
-        $photos = $this->photos;
+        $photos = $this->images;
         foreach ($photos as $i => $photo) {
             if ($photo->isIdEqualTo($id)) {
                 if ($prev = $photos[$i - 1] ?? null) {
@@ -172,7 +172,7 @@ class Product extends ActiveRecord
 
     public function movePhotoDown($id): void
     {
-        $photos = $this->photos;
+        $photos = $this->images;
         foreach ($photos as $i => $photo) {
             if ($photo->isIdEqualTo($id)) {
                 if ($next = $photos[$i + 1] ?? null) {
@@ -191,7 +191,7 @@ class Product extends ActiveRecord
         foreach ($photos as $i => $photo) {
             $photo->setSort($i);
         }
-        $this->photos = $photos;
+        $this->images = $photos;
     }
 
     public function removePhotos(): void
@@ -419,9 +419,14 @@ class Product extends ActiveRecord
         return $this->hasMany(Value::class, ['product_id' => 'id']);
     }
 
-    public function getPhotos(): ActiveQuery
+    public function getimages(): ActiveQuery
     {
         return $this->hasMany(Photo::class, ['product_id' => 'id'])->orderBy('sort');
+    }
+
+    public function getMainPhoto(): ActiveQuery
+    {
+        return $this->hasOne(Photo::class, ['id' => 'main_photo_id']);
     }
 
     public function getTagAssignments(): ActiveQuery
@@ -444,11 +449,6 @@ class Product extends ActiveRecord
         return $this->hasMany(Review::class, ['product_id' => 'id']);
     }
 
-    public function getMainPhoto(): ActiveQuery
-    {
-        return $this->hasOne(Photo::class, ['id' => 'main_photo_id']);
-    }
-
     public function getCategories(): ActiveQuery
     {
         return $this->hasMany(Category::class, ['id' => 'category_id'])->via('categoryAssignments');
@@ -462,10 +462,10 @@ class Product extends ActiveRecord
     public function behaviors()
     {
         return [
-            MetaBehavior::className(),
+            MetaBehavior::class,
             [
-                'class' => SaveRelationsBehavior::className(),
-                'relations' => ['categoryAssignments', 'values', 'photos', 'tagAssignments', 'relatedAssignments', 'modifications', 'reviews', 'mainPhoto', 'categories', 'tags'],
+                'class' => SaveRelationsBehavior::class,
+                'relations' => ['categoryAssignments', 'values', 'images', 'tagAssignments', 'relatedAssignments', 'modifications', 'categories', 'tags'],
             ],
         ];
     }
@@ -480,7 +480,7 @@ class Product extends ActiveRecord
     public function beforeDelete(): bool
     {
         if (parent::beforeDelete()) {
-            foreach ($this->photos as $photo) {
+            foreach ($this->images as $photo) {
                 $photo->delete();
             }
             return true;
