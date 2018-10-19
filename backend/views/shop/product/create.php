@@ -1,7 +1,6 @@
 <?php
 
 use kartik\widgets\FileInput;
-use mihaildev\ckeditor\CKEditor;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
@@ -76,7 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="box-body">
             <?php foreach ($model->values as $i => $value): ?>
                 <?php if ($variants = $value->variantsList()): ?>
-                    <?= $form->field($value, '[' . $i . ']value')->dropDownList($variants, ['prompt' => '']) ?>
+                    <?= $form->field($value, '[' . $i . ']value')->dropDownList(\shop\helpers\CharacteristicHelper::getArrayVariants($variants), ['prompt' => '']) ?>
                 <?php else: ?>
                     <?= $form->field($value, '[' . $i . ']value')->textInput() ?>
                 <?php endif ?>

@@ -27,4 +27,16 @@ class CharacteristicHelper
         $result = implode(PHP_EOL, $getArrayWithKeys);
         return $result;
     }
+
+    public static function getArrayVariants(array $arrayVariants): array
+    {
+        $implode = implode(', ', $arrayVariants);
+        $result = explode(', ', $implode);
+        $array = [];
+        foreach ($result as $key => $value)
+        {
+            $array[$value] = $value;
+        }
+        return $array;
+    }
 }
