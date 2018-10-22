@@ -3,6 +3,7 @@
 namespace shop\services\manage\Shop;
 
 use shop\forms\manage\Shop\Product\CategoriesForm;
+use shop\forms\manage\Shop\Product\ModificationForm;
 use shop\repositories\Shop\BrandRepository;
 use shop\repositories\Shop\CategoryRepository;
 use shop\repositories\Shop\ProductRepository;
