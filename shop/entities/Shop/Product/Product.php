@@ -59,6 +59,15 @@ class Product extends ActiveRecord
         return $product;
     }
 
+    public function edit($brandId, $code, $name, $description, Meta $meta): void
+    {
+        $this->brand_id = $brandId;
+        $this->code = $code;
+        $this->name = $name;
+        $this->description = $description;
+        $this->meta = $meta;
+    }
+
     public function setPrice($new, $old): void
     {
         $this->price_new = $new;
@@ -419,7 +428,7 @@ class Product extends ActiveRecord
         return $this->hasMany(Value::class, ['product_id' => 'id']);
     }
 
-    public function getimages(): ActiveQuery
+    public function getImages(): ActiveQuery
     {
         return $this->hasMany(Photo::class, ['product_id' => 'id'])->orderBy('sort');
     }

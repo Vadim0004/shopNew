@@ -125,10 +125,6 @@ class ProductManageService
                 $product->setValue($value->id, $value->value);
             }
 
-            foreach ($form->photos->files as $file) {
-                $product->addPhoto($file);
-            }
-
             foreach ($form->tags->existing as $tagId) {
                 $tag = $this->tagRepository->get($tagId);
                 $product->assignTag($tag->id);
@@ -194,10 +190,9 @@ class ProductManageService
         $product->addModification(
             $form->code,
             $form->name,
-            $form->price,
-            $form->quantity
+            $form->price
         );
-        $this->products->save($product);
+        $this->productRepository->save($product);
     }
 
     public function editModification($id, $modificationId, ModificationForm $form): void
@@ -207,17 +202,16 @@ class ProductManageService
             $modificationId,
             $form->code,
             $form->name,
-            $form->price,
-            $form->quantity
+            $form->price
         );
-        $this->products->save($product);
+        $this->productRepository->save($product);
     }
 
     public function removeModification($id, $modificationId): void
     {
-        $product = $this->products->get($id);
+        $product = $this->productRepository->get($id);
         $product->removeModification($modificationId);
-        $this->products->save($product);
+        $this->productRepository->save($product);
     }
 
     public function remove($id): void
