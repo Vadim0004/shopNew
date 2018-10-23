@@ -16,6 +16,7 @@ use yii\helpers\ArrayHelper;
  * @property PhotosForm $photos
  * @property TagsForm $tags
  * @property ValueForm[] $values
+ * @property RelatedProductForm $relatedProducts
  */
 class ProductCreateForm extends CompositeForm
 {
@@ -31,6 +32,7 @@ class ProductCreateForm extends CompositeForm
         $this->categories = new CategoriesForm();
         $this->photos = new PhotosForm();
         $this->tags = new TagsForm();
+        $this->relatedProducts = new RelatedProductForm();
         $this->values = array_map(function (Characteristic $characteristic) {
             return new ValueForm($characteristic);
         }, Characteristic::find()->orderBy('sort')->all());
@@ -50,7 +52,7 @@ class ProductCreateForm extends CompositeForm
 
     protected function internalForms(): array
     {
-        return ['price', 'meta', 'photos', 'categories', 'tags', 'values'];
+        return ['price', 'meta', 'photos', 'categories', 'tags', 'values', 'relatedProducts'];
     }
 
     public function brandsList(): array

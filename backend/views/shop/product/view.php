@@ -63,6 +63,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'value' => implode(', ', ArrayHelper::getColumn($product->categories, 'name')),
                             ],
                             [
+                                'label' => 'Related products',
+                                'value' => implode(', ', ArrayHelper::getColumn($product->relatedAssignments, 'related_id')),
+                            ],
+                            [
                                 'label' => 'Tags',
                                 'value' => implode(', ', ArrayHelper::getColumn($product->tags, 'name')),
                             ],

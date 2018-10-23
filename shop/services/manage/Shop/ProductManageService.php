@@ -76,6 +76,11 @@ class ProductManageService
             $product->assignTag($tag->id);
         }
 
+        foreach ($form->relatedProducts->products as $relatedProductOne) {
+            $relatedOne = $this->productRepository->get($relatedProductOne);
+            $product->assignRelatedProduct($relatedOne->id);
+        }
+
         $this->transaction->wrap(function () use ($form, $product){
             foreach ($form->tags->newNames as $tagName) {
                 if (!$tag = $this->tagRepository->findByName($tagName)) {

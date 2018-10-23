@@ -71,6 +71,13 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 
     <div class="box box-default">
+        <div class="box-header with-border">Related products</div>
+        <div class="box-body">
+            <?= $form->field($model->relatedProducts, 'products')->checkboxList($model->relatedProducts->productsList()) ?>
+        </div>
+    </div>
+
+    <div class="box box-default">
         <div class="box-header with-border">Characteristics</div>
         <div class="box-body">
             <?php foreach ($model->values as $i => $value): ?>
