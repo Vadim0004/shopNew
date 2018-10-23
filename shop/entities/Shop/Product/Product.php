@@ -109,6 +109,8 @@ class Product extends ActiveRecord
         $values = $this->values;
         foreach ($values as $val) {
             if ($val->isForCharacteristic($id)) {
+                $val->change($value);
+                $this->values = $values;
                 return;
             }
         }
@@ -446,6 +448,11 @@ class Product extends ActiveRecord
     public function getRelatedAssignments(): ActiveQuery
     {
         return $this->hasMany(RelatedAssignment::class, ['product_id' => 'id']);
+    }
+
+    public function getRelateds(): ActiveQuery
+    {
+        return $this->hasMany(Product::class, ['id' => 'related_id'])->via('relatedAssignments');
     }
 
     public function getModifications(): ActiveQuery

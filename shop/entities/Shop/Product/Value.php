@@ -35,6 +35,11 @@ class Value extends ActiveRecord
         return $this->characteristic_id == $id;
     }
 
+    public function change($value): void
+    {
+        $this->value = $value;
+    }
+
     public static function tableName()
     {
         return '{{%shop_values}}';
