@@ -120,6 +120,10 @@ class ProductManageService
 
             $product->revokeCategories();
             $product->revokeTags();
+            foreach ($product->relatedAssignments as $relatedProduct) {
+                $relateId = $relatedProduct->related_id;
+                $product->revokeRelatedProduct($relateId);
+            }
             $this->productRepository->save($product);
 
             foreach ($form->categories->others as $otherId) {
@@ -134,6 +138,11 @@ class ProductManageService
             foreach ($form->tags->existing as $tagId) {
                 $tag = $this->tagRepository->get($tagId);
                 $product->assignTag($tag->id);
+            }
+
+            foreach ($form->relatedProducts->products as $relatedProductOne) {
+                $relatedOne = $this->productRepository->get($relatedProductOne);
+                $product->assignRelatedProduct($relatedOne->id);
             }
 
             foreach ($form->tags->newNames as $tagName) {
