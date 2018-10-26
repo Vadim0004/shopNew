@@ -3,6 +3,7 @@
 namespace shop\services\manage\Shop;
 
 use shop\forms\manage\Shop\Product\CategoriesForm;
+use shop\forms\manage\Shop\Product\ImportForm;
 use shop\forms\manage\Shop\Product\ModificationForm;
 use shop\repositories\Shop\BrandRepository;
 use shop\repositories\Shop\CategoryRepository;
@@ -23,19 +24,24 @@ class ProductManageService
     private $categoryRepository;
     private $tagRepository;
     private $transaction;
+    private $reader;
 
-    public function __construct(
+    public function __construct
+    (
         ProductRepository $productRepository,
         CategoryRepository $categoryRepository,
         BrandRepository $brandRepository,
         TagRepository $tagRepository,
-        TransactionManager $transaction)
+        TransactionManager $transaction,
+        ProductReader $reader
+    )
     {
         $this->productRepository = $productRepository;
         $this->categoryRepository = $categoryRepository;
         $this->brandRepository = $brandRepository;
         $this->tagRepository = $tagRepository;
         $this->transaction = $transaction;
+        $this->reader = $reader;
     }
 
     public function create(ProductCreateForm $form): Product
@@ -227,6 +233,52 @@ class ProductManageService
         $product = $this->productRepository->get($id);
         $product->removeModification($modificationId);
         $this->productRepository->save($product);
+    }
+
+    public function importProduct(ImportForm $form): void
+    {
+        $this->transaction->wrap(function () use ($form) {
+            $fileServer = \Yii::$aliases['@fileCsv'] . '/' . $form->filesCsv->name;
+            if (is_file($fileServer)) {
+                $results = $this->reader->readCsv($fileServer);
+                foreach ($results as $resultOne) {
+                    $product = $this->productRepository->getProductByCode($resultOne->code);
+                    if ($product) {
+                        $product->edit(
+                            $resultOne->brandId,
+                            $resultOne->code,
+                            $resultOne->name,
+                            $resultOne->description,
+                            new Meta(
+                                '',
+                                '',
+                                ''
+                            )
+                        );
+                        $product->setPrice($resultOne->priceNew, $resultOne->priceOld);
+                        $product->changeMainCategory($resultOne->categoryId);
+                        $this->productRepository->save($product);
+                    } else {
+                        $product = Product::create(
+                            $resultOne->brandId,
+                            $resultOne->categoryId,
+                            $resultOne->code,
+                            $resultOne->name,
+                            $resultOne->description,
+                            new Meta(
+                                '',
+                                '',
+                                ''
+                            )
+                        );
+                        $this->productRepository->save($product);
+                        $product->setPrice($resultOne->priceNew, $resultOne->priceOld);
+                        $product->changeMainCategory($resultOne->categoryId);
+                        $this->productRepository->save($product);
+                    }
+                }
+            }
+        });
     }
 
     public function remove($id): void

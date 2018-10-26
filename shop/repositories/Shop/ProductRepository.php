@@ -3,6 +3,7 @@
 namespace shop\repositories\Shop;
 
 use shop\entities\Shop\Product\Product;
+use shop\repositories\NotFoundException;
 
 class ProductRepository
 {
@@ -12,6 +13,17 @@ class ProductRepository
             throw new NotFoundException('Product is not found.');
         }
         return $product;
+    }
+
+    /**
+     * @param $code
+     * @return array|null|\yii\db\ActiveRecord
+     */
+    public function getProductByCode($code)
+    {
+        if ($product = Product::find()->where(['code' => $code])->one()) {
+            return $product;
+        }
     }
 
     public function save(Product $product): void
