@@ -1,6 +1,6 @@
 <?php
 
-namespace shop\services\manage\Shop;
+namespace shop\services;
 
 class ProductRow
 {

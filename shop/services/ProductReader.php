@@ -1,6 +1,8 @@
 <?php
 
-namespace shop\services\manage\Shop;
+namespace shop\services;
+
+use shop\services\ProductRow;
 
 class ProductReader
 {

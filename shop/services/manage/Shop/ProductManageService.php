@@ -15,6 +15,7 @@ use shop\entities\Shop\Product\Product;
 use shop\forms\manage\Shop\Product\ProductCreateForm;
 use shop\forms\manage\Shop\Product\PhotosForm;
 use shop\forms\manage\Shop\Product\ProductEditForm;
+use shop\services\ProductReader;
 use shop\services\TransactionManager;
 
 class ProductManageService
