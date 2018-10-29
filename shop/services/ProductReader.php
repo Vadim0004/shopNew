@@ -2,17 +2,14 @@
 
 namespace shop\services;
 
-use shop\services\ProductRow;
-
 class ProductReader
 {
     /**
-     * @param $fileServer
-     * @return ProductRow[]
+     * @param string $fileServer
+     * @return iterable
      */
-    public function readCsv(string $fileServer): array
+    public function readCsv(string $fileServer): iterable
     {
-        $result = [];
         $f = fopen($fileServer, 'r');
         while ($row = fgetcsv($f, 0, ';')) {
             $productRow = new ProductRow();
@@ -23,8 +20,8 @@ class ProductReader
             $productRow->brandId = $row[4];
             $productRow->categoryId = $row[5];
             $productRow->description = $row[6];
-            $result[] = $productRow;
+            yield $productRow;
         }
-        return $result;
+        fclose($f);
     }
 }

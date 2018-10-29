@@ -17,7 +17,7 @@ class ProductRepository
 
     /**
      * @param $code
-     * @return array|null|\yii\db\ActiveRecord
+     * @return array|null|Product
      */
     public function getProductByCode($code)
     {
