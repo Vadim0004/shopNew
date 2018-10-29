@@ -9,6 +9,8 @@ use Yii;
 
 class AuthController extends Controller
 {
+    public $layout = 'cabinet';
+
     private $authService;
 
     public function __construct($id, $module, AuthService $authService, $config = [])
