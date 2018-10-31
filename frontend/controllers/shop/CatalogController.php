@@ -44,4 +44,22 @@ class CatalogController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+
+    /**
+     * @param $id
+     * @return mixed
+     * @throws NotFoundHttpException
+     */
+    public function actionCategory($id)
+    {
+        if (!$category = $this->categories->find($id)) {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+        $dataProvider = $this->products->getAllByCategory($category);
+
+        return $this->render('category', [
+            'category' => $category,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
 }

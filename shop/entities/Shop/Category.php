@@ -72,4 +72,14 @@ class Category extends ActiveRecord
     {
         return new CategoryQuery(static::class);
     }
+
+    public function getSeoTitle(): string
+    {
+        return $this->meta->title ?: $this->getHeadingTile();
+    }
+
+    public function getHeadingTile(): string
+    {
+        return $this->title ?: $this->name;
+    }
 }
