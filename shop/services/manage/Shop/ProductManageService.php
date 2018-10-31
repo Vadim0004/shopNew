@@ -282,6 +282,20 @@ class ProductManageService
         });
     }
 
+    public function activate($id): void
+    {
+        $product = $this->productRepository->get($id);
+        $product->activate();
+        $this->productRepository->save($product);
+    }
+
+    public function draft($id): void
+    {
+        $product = $this->productRepository->get($id);
+        $product->draft();
+        $this->productRepository->save($product);
+    }
+
     public function remove($id): void
     {
         $product = $this->productRepository->get($id);

@@ -4,6 +4,7 @@ use shop\entities\Shop\Product\Product;
 use shop\helpers\PriceHelper;
 use yii\helpers\Html;
 use yii\grid\GridView;
+use shop\helpers\ProductHelper;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\forms\Shop\ProductSearch */
@@ -47,6 +48,14 @@ $this->params['breadcrumbs'][] = $this->title;
                         'value' => function (Product $model) {
                             return PriceHelper::format($model->price_new);
                         },
+                    ],
+                    [
+                        'attribute' => 'status',
+                        'filter' => $searchModel->statusList(),
+                        'value' => function (Product $model) {
+                            return ProductHelper::statusLabel($model->status);
+                        },
+                        'format' => 'raw',
                     ],
                 ],
             ]); ?>

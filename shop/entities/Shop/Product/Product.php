@@ -4,6 +4,7 @@ namespace shop\entities\Shop\Product;
 
 use lhs\Yii2SaveRelationsBehavior\SaveRelationsBehavior;
 use shop\entities\Meta;
+use shop\entities\Shop\Product\queries\ProductQuery;
 use shop\entities\Shop\Category;
 use yii\db\ActiveQuery;
 use shop\entities\behaviors\MetaBehavior;
@@ -27,6 +28,7 @@ use yii\web\UploadedFile;
  * @property string $rating
  * @property integer $main_photo_id
  * @property string $meta_json
+ * @property integer $status
  *
  * @property Meta $meta
  * @property Brand $brand
@@ -44,6 +46,9 @@ use yii\web\UploadedFile;
  */
 class Product extends ActiveRecord
 {
+    const STATUS_DRAFT = 0;
+    const STATUS_ACTIVE = 1;
+
     public $meta;
 
     public static function create($brandId, $categoryId, $code, $name, $description, Meta $meta): self
@@ -55,6 +60,7 @@ class Product extends ActiveRecord
         $product->name = $name;
         $product->description = $description;
         $product->meta = $meta;
+        $product->status = self::STATUS_DRAFT;
         $product->created_at = time();
         return $product;
     }
@@ -77,6 +83,32 @@ class Product extends ActiveRecord
     public function changeMainCategory($categoryId): void
     {
         $this->category_id = $categoryId;
+    }
+
+    public function activate(): void
+    {
+        if ($this->isActive()) {
+            throw new \DomainException('Product is already active.');
+        }
+        $this->status = self::STATUS_ACTIVE;
+    }
+
+    public function draft(): void
+    {
+        if ($this->isDraft()) {
+            throw new \DomainException('Product is already draft.');
+        }
+        $this->status = self::STATUS_DRAFT;
+    }
+
+    public function isActive(): bool
+    {
+        return $this->status == self::STATUS_ACTIVE;
+    }
+
+    public function isDraft(): bool
+    {
+        return $this->status == self::STATUS_DRAFT;
     }
 
     public function assignCategory($id): void
@@ -511,5 +543,10 @@ class Product extends ActiveRecord
         if (array_key_exists('mainPhoto', $related)) {
             $this->updateAttributes(['main_photo_id' => $related['mainPhoto'] ? $related['mainPhoto']->id : null]);
         }
+    }
+
+    public static function find(): ProductQuery
+    {
+        return new ProductQuery(static::class);
     }
 }
