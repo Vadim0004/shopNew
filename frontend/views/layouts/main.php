@@ -209,8 +209,9 @@ OwlCarouselAsset::register($this);
         'options' => ['class' => 'nav navbar-nav'],
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
+            ['label' => 'Catalog', 'url' => ['shop/catalog/index']],
             ['label' => 'Contact', 'url' => ['/contact/index']],
+            ['label' => 'About', 'url' => ['/site/about']],
         ],
     ]);
     NavBar::end();
