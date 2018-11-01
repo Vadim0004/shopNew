@@ -2,10 +2,12 @@
 
 /* @var $this yii\web\View */
 /* @var $product \shop\entities\Shop\Product\Product */
+/* @var $cartForm \shop\forms\shop\AddToCartForm */
 
 use frontend\assets\MagnificPopupAsset;
 use shop\helpers\PriceHelper;
 use yii\helpers\Html;
+use yii\bootstrap\ActiveForm;
 
 use yii\helpers\Url;
 
@@ -20,7 +22,7 @@ $this->params['breadcrumbs'][] = $product->name;
 MagnificPopupAsset::register($this);
 ?>
 
-<div class="row">
+<div class="row" xmlns:fb="http://www.w3.org/1999/xhtml">
     <div class="col-sm-8">
         <ul class="thumbnails">
             <?php foreach ($product->images as $i =>$photo): ?>
@@ -146,23 +148,17 @@ MagnificPopupAsset::register($this);
         <div id="product">
             <hr>
             <h3>Available Options</h3>
-            <div class="form-group required">
-                <label class="control-label" for="input-option226">Modifications</label>
-                <select name="option[226]" id="input-option226" class="form-control">
-                    <option value=""> --- Please Select ---</option>
-                    <option value="15">Red</option>
-                    <option value="16">Blue</option>
-                </select>
-            </div>
+
+            <?php $form = ActiveForm::begin() ?>
+
+            <?= $form->field($cartForm, 'modification')->dropDownList($cartForm->modificationsList(), ['prompt' => '--- Select ---']) ?>
+            <?= $form->field($cartForm, 'quantity')->textInput() ?>
+
             <div class="form-group">
-                <label class="control-label" for="input-quantity">Qty</label>
-                <input type="text" name="quantity" value="1" size="2" id="input-quantity" class="form-control"/>
-                <input type="hidden" name="product_id" value="47"/>
-                <br/>
-                <button type="button" id="button-cart" data-loading-text="Loading..."
-                        class="btn btn-primary btn-lg btn-block">Add to Cart
-                </button>
+                <?= Html::submitButton('Add to Cart', ['class' => 'btn btn-primary btn-lg btn-block']) ?>
             </div>
+
+            <?php ActiveForm::end() ?>
         </div>
         <div class="rating">
             <p>
