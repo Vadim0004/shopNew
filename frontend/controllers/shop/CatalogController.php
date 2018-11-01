@@ -6,6 +6,7 @@ use shop\readModels\Shop\BrandReadRepository;
 use shop\readModels\Shop\CategoryReadRepository;
 use shop\readModels\Shop\ProductReadRepository;
 use shop\readModels\Shop\TagReadRepository;
+use shop\repositories\NotFoundException;
 use yii\web\Controller;
 
 class CatalogController extends Controller
@@ -60,6 +61,22 @@ class CatalogController extends Controller
         return $this->render('category', [
             'category' => $category,
             'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     * @throws NotFoundHttpException
+     */
+    public function actionProduct($id)
+    {
+        if (!$product = $this->products->find($id)) {
+            throw new NotFoundException('The requested page does not exist.');
+        }
+
+        return $this->render('product', [
+            'product' => $product,
         ]);
     }
 }

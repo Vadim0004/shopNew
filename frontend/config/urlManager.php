@@ -16,6 +16,7 @@ return [
         '<_a:login|logout>' => 'auth/auth/<_a>',
 
         'catalog' => 'shop/catalog/index',
+        'product/<id:\d+>' => 'shop/catalog/product',
         //['class' => 'frontend\urls\CategoryUrlRule'],
         'catalog/<id:\d+>' => 'shop/catalog/product',
 
