@@ -88,4 +88,38 @@ class CatalogController extends Controller
             'reviewForm' => $reviewForm,
         ]);
     }
+
+    /**
+     * @param $id
+     * @return mixed
+     * @throws NotFoundHttpException
+     */
+    public function actionBrand($id)
+    {
+        if (!$brand = $this->brands->find($id)) {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+        $dataProvider = $this->products->getAllByBrand($brand);
+        return $this->render('brand', [
+            'brand' => $brand,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     * @throws NotFoundHttpException
+     */
+    public function actionTag($id)
+    {
+        if (!$tag = $this->tags->find($id)) {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+        $dataProvider = $this->products->getAllByTag($tag);
+        return $this->render('tag', [
+            'tag' => $tag,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
 }
