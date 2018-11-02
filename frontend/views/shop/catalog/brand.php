@@ -2,17 +2,17 @@
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\DataProviderInterface */
-/* @var $tag shop\entities\Shop\Tag */
+/* @var $brand shop\entities\Shop\Brand */
 
 use yii\helpers\Html;
 
-$this->title = $tag->getSeoTitle();
+$this->title = $brand->getSeoTitle();
 
-$this->registerMetaTag(['name' =>'description', 'content' => $tag->meta->description]);
-$this->registerMetaTag(['name' =>'keywords', 'content' => $tag->meta->keywords]);
+$this->registerMetaTag(['name' =>'description', 'content' => $brand->meta->description]);
+$this->registerMetaTag(['name' =>'keywords', 'content' => $brand->meta->keywords]);
 
 $this->params['breadcrumbs'][] = ['label' => 'Catalog', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $tag->name;
+$this->params['breadcrumbs'][] = $brand->name;
 ?>
 
     <h1><?= Html::encode($brand->name) ?></h1>
