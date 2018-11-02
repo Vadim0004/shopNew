@@ -11,6 +11,8 @@ use shop\entities\Meta;
 /**
  * This is the model class for table "shop_categories".
  *
+ * @property Category[] $parents
+ * @property Category[] $children
  * @property int $id
  * @property string $name
  * @property string $slug
