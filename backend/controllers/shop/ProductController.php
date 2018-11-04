@@ -200,6 +200,34 @@ class ProductController extends Controller
 
     /**
      * @param integer $id
+     * @return mixed
+     */
+    public function actionActivateFeatured($id)
+    {
+        try {
+            $this->productManageService->activateFeatured($id);
+        } catch (\DomainException $e) {
+            Yii::$app->session->setFlash('error', $e->getMessage());
+        }
+        return $this->redirect(['view', 'id' => $id]);
+    }
+
+    /**
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionDeactivateFeatured($id)
+    {
+        try {
+            $this->productManageService->deactivateFeatured($id);
+        } catch (\DomainException $e) {
+            Yii::$app->session->setFlash('error', $e->getMessage());
+        }
+        return $this->redirect(['view', 'id' => $id]);
+    }
+
+    /**
+     * @param integer $id
      * @param $photo_id
      * @return mixed
      */

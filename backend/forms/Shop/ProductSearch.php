@@ -17,11 +17,12 @@ class ProductSearch extends Model
     public $category_id;
     public $brand_id;
     public $status;
+    public $is_featured;
 
     public function rules(): array
     {
         return [
-            [['id', 'category_id', 'brand_id', 'status'], 'integer'],
+            [['id', 'category_id', 'brand_id', 'status', 'is_featured'], 'integer'],
             [['code', 'name'], 'safe'],
         ];
     }
@@ -53,6 +54,7 @@ class ProductSearch extends Model
             'category_id' => $this->category_id,
             'brand_id' => $this->brand_id,
             'status' => $this->status,
+            'is_featured' => $this->is_featured,
         ]);
 
         $query
@@ -72,5 +74,10 @@ class ProductSearch extends Model
     public function statusList(): array
     {
         return ProductHelper::statusList();
+    }
+
+    public function statusListFeatured(): array
+    {
+        return ProductHelper::statusListFeatured();
     }
 }

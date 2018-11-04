@@ -28,7 +28,8 @@ use yii\web\UploadedFile;
  * @property string $rating
  * @property integer $main_photo_id
  * @property string $meta_json
- * @property integer $status
+ * @property int $status
+ * @property int $is_featured
  *
  * @property Meta $meta
  * @property Brand $brand
@@ -48,6 +49,8 @@ class Product extends ActiveRecord
 {
     const STATUS_DRAFT = 0;
     const STATUS_ACTIVE = 1;
+    const STATUS_FEATURED_ON = 1;
+    const STATUS_FEATURED_OFF = 0;
 
     public $meta;
 
@@ -61,6 +64,7 @@ class Product extends ActiveRecord
         $product->description = $description;
         $product->meta = $meta;
         $product->status = self::STATUS_DRAFT;
+        $product->is_featured = self::STATUS_FEATURED_OFF;
         $product->created_at = time();
         return $product;
     }
@@ -109,6 +113,32 @@ class Product extends ActiveRecord
     public function isDraft(): bool
     {
         return $this->status == self::STATUS_DRAFT;
+    }
+
+    public function activateFeatured(): void
+    {
+        if ($this->isActiveFeatured()) {
+            throw new \DomainException('Product is already featured.');
+        }
+        $this->is_featured = self::STATUS_FEATURED_ON;
+    }
+
+    public function deactivateFeatured(): void
+    {
+        if ($this->isDeactivateFeatured()) {
+            throw new \DomainException('Product is already deactivate fo featured.');
+        }
+        $this->is_featured = self::STATUS_FEATURED_OFF;
+    }
+
+    public function isActiveFeatured(): bool
+    {
+        return $this->is_featured == self::STATUS_FEATURED_ON;
+    }
+
+    public function isDeactivateFeatured(): bool
+    {
+        return $this->is_featured == self::STATUS_FEATURED_OFF;
     }
 
     public function getSeoTitle(): string

@@ -296,6 +296,20 @@ class ProductManageService
         $this->productRepository->save($product);
     }
 
+    public function activateFeatured($id): void
+    {
+        $product = $this->productRepository->get($id);
+        $product->activateFeatured();
+        $this->productRepository->save($product);
+    }
+
+    public function deactivateFeatured($id): void
+    {
+        $product = $this->productRepository->get($id);
+        $product->deactivateFeatured();
+        $this->productRepository->save($product);
+    }
+
     public function remove($id): void
     {
         $product = $this->productRepository->get($id);

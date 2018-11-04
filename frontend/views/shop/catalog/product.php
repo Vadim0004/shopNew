@@ -34,7 +34,7 @@ MagnificPopupAsset::register($this);
 <div class="row" xmlns:fb="http://www.w3.org/1999/xhtml">
     <div class="col-sm-8">
         <ul class="thumbnails">
-            <?php foreach ($product->images as $i =>$photo): ?>
+            <?php foreach ($product->images as $i => $photo): ?>
                 <?php if ($i == 0): ?>
                     <li>
                         <a class="thumbnail" href="<?= $photo->getThumbFileUrl('file', 'catalog_origin') ?>">

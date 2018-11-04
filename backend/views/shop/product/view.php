@@ -23,6 +23,11 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-view">
     <p>
+        <?php if ($product->isActiveFeatured()): ?>
+            <?= Html::a('Deactivate Fear', ['deactivate-featured', 'id' => $product->id], ['class' => 'btn btn-primary', 'data-method' => 'post']) ?>
+        <?php else: ?>
+            <?= Html::a('Activate Fear', ['activate-featured', 'id' => $product->id], ['class' => 'btn btn-success', 'data-method' => 'post']) ?>
+        <?php endif; ?>
         <?php if ($product->isActive()): ?>
             <?= Html::a('Draft', ['draft', 'id' => $product->id], ['class' => 'btn btn-primary', 'data-method' => 'post']) ?>
         <?php else: ?>
@@ -46,6 +51,11 @@ $this->params['breadcrumbs'][] = $this->title;
                         'model' => $product,
                         'attributes' => [
                             'id',
+                            [
+                                'attribute' => 'is_featured',
+                                'value' => ProductHelper::statusLabelFeatured($product->is_featured),
+                                'format' => 'raw',
+                            ],
                             [
                                 'attribute' => 'status',
                                 'value' => ProductHelper::statusLabel($product->status),

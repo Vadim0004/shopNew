@@ -57,6 +57,14 @@ $this->params['breadcrumbs'][] = $this->title;
                         },
                         'format' => 'raw',
                     ],
+                    [
+                        'attribute' => 'is_featured',
+                        'filter' => $searchModel->statusListFeatured(),
+                        'value' => function (Product $model) {
+                            return ProductHelper::statusLabelFeatured($model->is_featured);
+                        },
+                        'format' => 'raw',
+                    ],
                 ],
             ]); ?>
         </div>

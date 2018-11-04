@@ -50,6 +50,17 @@ class ProductReadRepository
         return Product::find()->active()->andWhere(['id' => $id])->one();
     }
 
+    public function getAllProductsFeatured(int $limit)
+    {
+        $featured = Product::find()->alias('p')->active('p')
+            ->where(['is_featured' => Product::STATUS_FEATURED_ON])
+            ->limit($limit)
+            ->with('mainPhoto')
+            ->orderBy(['id' => SORT_DESC])
+            ->all();
+        return $featured;
+    }
+
     private function getProvider(ActiveQuery $query): ActiveDataProvider
     {
         return new ActiveDataProvider([
