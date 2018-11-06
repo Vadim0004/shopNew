@@ -9,6 +9,7 @@ use shop\readModels\Shop\ProductReadRepository;
 use shop\readModels\Shop\TagReadRepository;
 use shop\repositories\NotFoundException;
 use shop\forms\Shop\ReviewForm;
+use shop\forms\Shop\Search\SearchForm;
 use yii\web\Controller;
 
 class CatalogController extends Controller
@@ -103,6 +104,23 @@ class CatalogController extends Controller
         return $this->render('brand', [
             'brand' => $brand,
             'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function actionSearch()
+    {
+        $form = new SearchForm();
+        $form->load(\Yii::$app->request->queryParams);
+        $form->validate();
+
+        $dataProvider = $this->products->search($form);
+
+        return $this->render('search', [
+            'dataProvider' => $dataProvider,
+            'searchForm' => $form,
         ]);
     }
 
