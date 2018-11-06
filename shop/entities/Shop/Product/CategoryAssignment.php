@@ -2,6 +2,7 @@
 
 namespace shop\entities\Shop\Product;
 
+use shop\entities\Shop\Category;
 use yii\db\ActiveRecord;
 
 /**
@@ -32,7 +33,7 @@ class CategoryAssignment extends ActiveRecord
      */
     public function getCategory()
     {
-        return $this->hasOne(ShopCategories::className(), ['id' => 'category_id']);
+        return $this->hasOne(Category::class, ['id' => 'category_id']);
     }
 
 }
