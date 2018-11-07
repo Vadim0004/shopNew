@@ -13,11 +13,11 @@ use frontend\widgets\shop\FeaturedProductsWidget;
         <div id="slideshow0" class="owl-carousel" style="opacity: 1;">
             <div class="item">
                 <a href="index.php?route=product/product&amp;path=57&amp;product_id=49"><img
-                        src="<?= "/backend/web/upload/cache/catalog/demo/banners/iPhone6.jpg" ?>"
+                        src="<?= "/frontend/web/image/catalog/demo/banners/iPhone6.jpg" ?>"
                         alt="iPhone 6" class="img-responsive"/></a>
             </div>
             <div class="item">
-                <img src="<?= "/backend/web/upload/cache/catalog/demo/banners/MacBookAir.jpg" ?>"
+                <img src="<?= "/frontend/web/image/catalog/demo/banners/MacBookAir.jpg" ?>"
                      alt="MacBookAir" class="img-responsive"/>
             </div>
         </div>
@@ -26,47 +26,47 @@ use frontend\widgets\shop\FeaturedProductsWidget;
         ]) ?>
         <div id="carousel0" class="owl-carousel">
             <div class="item text-center">
-                <img src="<?= "/backend/web/upload/cache/catalog/demo/manufacturer/nfl.png" ?>" alt="NFL"
+                <img src="<?= "/frontend/web/image/catalog/demo/manufacturer/nfl.png" ?>" alt="NFL"
                      class="img-responsive"/>
             </div>
             <div class="item text-center">
-                <img src="<?= "/backend/web/upload/cache/catalog/demo/manufacturer/redbull.png" ?>"
+                <img src="<?= "/frontend/web/image/catalog/demo/manufacturer/redbull.png" ?>"
                      alt="RedBull" class="img-responsive"/>
             </div>
             <div class="item text-center">
-                <img src="<?= "/backend/web/upload/cache/catalog/demo/manufacturer/sony.png" ?>" alt="Sony"
+                <img src="<?= "/frontend/web/image/catalog/demo/manufacturer/sony.png" ?>" alt="Sony"
                      class="img-responsive"/>
             </div>
             <div class="item text-center">
-                <img src="<?= "/backend/web/upload/cache/catalog/demo/manufacturer/cocacola.png" ?>"
+                <img src="<?= "/frontend/web/image/catalog/demo/manufacturer/cocacola.png" ?>"
                      alt="Coca Cola" class="img-responsive"/>
             </div>
             <div class="item text-center">
-                <img src="<?= "/backend/web/upload/cache/catalog/demo/manufacturer/burgerking.png" ?>"
+                <img src="<?= "/frontend/web/image/catalog/demo/manufacturer/burgerking.png" ?>"
                      alt="Burger King" class="img-responsive"/>
             </div>
             <div class="item text-center">
-                <img src="<?= "/backend/web/upload/cache/catalog/demo/manufacturer/canon.png" ?>" alt="Canon"
+                <img src="<?= "/frontend/web/image/catalog/demo/manufacturer/canon.png" ?>" alt="Canon"
                      class="img-responsive"/>
             </div>
             <div class="item text-center">
-                <img src="<?= "/backend/web/upload/cache/catalog/demo/manufacturer/harley.png" ?>"
+                <img src="<?= "/frontend/web/image/catalog/demo/manufacturer/harley.png" ?>"
                      alt="Harley Davidson" class="img-responsive"/>
             </div>
             <div class="item text-center">
-                <img src="<?= "/backend/web/upload/cache/catalog/demo/manufacturer/dell.png" ?>" alt="Dell"
+                <img src="<?= "/frontend/web/image/catalog/demo/manufacturer/dell.png" ?>" alt="Dell"
                      class="img-responsive"/>
             </div>
             <div class="item text-center">
-                <img src="<?= "/backend/web/upload/cache/catalog/demo/manufacturer/disney.png" ?>"
+                <img src="<?= "/frontend/web/image/catalog/demo/manufacturer/disney.png" ?>"
                      alt="Disney" class="img-responsive"/>
             </div>
             <div class="item text-center">
-                <img src="<?= "/backend/web/upload/cache/catalog/demo/manufacturer/starbucks.png" ?>"
+                <img src="<?= "/frontend/web/image/catalog/demo/manufacturer/starbucks.png" ?>"
                      alt="Starbucks" class="img-responsive"/>
             </div>
             <div class="item text-center">
-                <img src="<?= "/backend/web/upload/cache/catalog/demo/manufacturer/nintendo.png" ?>"
+                <img src="<?= "/frontend/web/image/catalog/demo/manufacturer/nintendo.png" ?>"
                      alt="Nintendo" class="img-responsive"/>
             </div>
         </div>
