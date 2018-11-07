@@ -31,6 +31,8 @@ use yii\web\UploadedFile;
  * @property string $meta_json
  * @property int $status
  * @property int $is_featured
+ * @property int $weight
+ * @property int $quantity
  *
  * @property Meta $meta
  * @property Brand $brand
@@ -55,7 +57,7 @@ class Product extends ActiveRecord
 
     public $meta;
 
-    public static function create($brandId, $categoryId, $code, $name, $description, Meta $meta): self
+    public static function create($brandId, $categoryId, $code, $name, $description, $weight, $quantity, Meta $meta): self
     {
         $product = new static();
         $product->brand_id = $brandId;
@@ -63,6 +65,8 @@ class Product extends ActiveRecord
         $product->code = $code;
         $product->name = $name;
         $product->description = $description;
+        $product->weight = $weight;
+        $product->quantity = $quantity;
         $product->meta = $meta;
         $product->status = self::STATUS_DRAFT;
         $product->is_featured = self::STATUS_FEATURED_OFF;
@@ -70,12 +74,21 @@ class Product extends ActiveRecord
         return $product;
     }
 
-    public function edit($brandId, $code, $name, $description, Meta $meta): void
+    public function setQuantity($quantity): void
+    {
+        if ($this->modifications) {
+            throw new \DomainException('Change modifications quantity.');
+        }
+        $this->quantity = $quantity;
+    }
+
+    public function edit($brandId, $code, $name, $description, $weight, Meta $meta): void
     {
         $this->brand_id = $brandId;
         $this->code = $code;
         $this->name = $name;
         $this->description = $description;
+        $this->weight = $weight;
         $this->meta = $meta;
     }
 
@@ -114,6 +127,24 @@ class Product extends ActiveRecord
     public function isDraft(): bool
     {
         return $this->status == self::STATUS_DRAFT;
+    }
+
+    public function isAvailable(): bool
+    {
+        return $this->quantity > 0;
+    }
+
+    public function canChangeQuantity(): bool
+    {
+        return !$this->modifications;
+    }
+
+    public function canBeCheckout($modificationId, $quantity): bool
+    {
+        if ($modificationId) {
+            return $quantity <= $this->getModification($modificationId)->quantity;
+        }
+        return $quantity <= $this->quantity;
     }
 
     public function activateFeatured(): void
@@ -349,7 +380,7 @@ class Product extends ActiveRecord
         throw new \DomainException('Modification is not found.');
     }
 
-    public function addModification($code, $name, $price): void
+    public function addModification($code, $name, $price, $quantity): void
     {
         $modifications = $this->modifications;
         foreach ($modifications as $modification) {
@@ -357,17 +388,17 @@ class Product extends ActiveRecord
                 throw new \DomainException('Modification already exists.');
             }
         }
-        $modifications[] = Modification::create($code, $name, $price);
-        $this->modifications = $modifications;
+        $modifications[] = Modification::create($code, $name, $price, $quantity);
+        $this->updateModifications($modifications);
     }
 
-    public function editModification($id, $code, $name, $price): void
+    public function editModification($id, $code, $name, $price, $quantity): void
     {
         $modifications = $this->modifications;
         foreach ($modifications as $i => $modification) {
             if ($modification->isIdEqualTo($id)) {
-                $modification->edit($code, $name, $price);
-                $this->modifications = $modifications;
+                $modification->edit($code, $name, $price, $quantity);
+                $this->updateModifications($modifications);
                 return;
             }
         }
@@ -380,11 +411,19 @@ class Product extends ActiveRecord
         foreach ($modifications as $i => $modification) {
             if ($modification->isIdEqualTo($id)) {
                 unset($modifications[$i]);
-                $this->modifications = $modifications;
+                $this->updateModifications($modifications);
                 return;
             }
         }
         throw new \DomainException('Modification is not found.');
+    }
+
+    private function updateModifications(array $modifications): void
+    {
+        $this->modifications = $modifications;
+        $this->quantity = array_sum(array_map(function (Modification $modification) {
+            return $modification->quantity;
+        }, $this->modifications));
     }
 
     // Reviews

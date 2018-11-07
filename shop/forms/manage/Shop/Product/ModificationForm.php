@@ -10,6 +10,7 @@ class ModificationForm extends Model
     public $code;
     public $name;
     public $price;
+    public $quantity;
 
     private $_product;
 
@@ -19,6 +20,7 @@ class ModificationForm extends Model
             $this->code = $modification->code;
             $this->name = $modification->name;
             $this->price = $modification->price;
+            $this->quantity = $modification->quantity;
             $this->_product = $modification;
         }
         parent::__construct($config);
@@ -27,7 +29,7 @@ class ModificationForm extends Model
     public function rules(): array
     {
         return [
-            [['code', 'name'], 'required'],
+            [['code', 'name', 'quantity'], 'required'],
             [['price'], 'integer'],
         ];
     }

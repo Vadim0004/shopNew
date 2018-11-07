@@ -129,6 +129,10 @@ class ProductReadRepository
                 ->joinWith('wishlistItems w', false, 'INNER JOIN')
                 ->andWhere(['w.user_id' => $userId]),
             'sort' => false,
+            'pagination' => [
+                'pageSizeLimit' => [2, 100],
+                'pageSize' => 2,
+            ]
         ]);
     }
 

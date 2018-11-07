@@ -18,11 +18,12 @@ class ProductSearch extends Model
     public $brand_id;
     public $status;
     public $is_featured;
+    public $quantity;
 
     public function rules(): array
     {
         return [
-            [['id', 'category_id', 'brand_id', 'status', 'is_featured'], 'integer'],
+            [['id', 'category_id', 'brand_id', 'status', 'is_featured', 'quantity'], 'integer'],
             [['code', 'name'], 'safe'],
         ];
     }
@@ -55,6 +56,7 @@ class ProductSearch extends Model
             'brand_id' => $this->brand_id,
             'status' => $this->status,
             'is_featured' => $this->is_featured,
+            'quantity' => $this->quantity,
         ]);
 
         $query

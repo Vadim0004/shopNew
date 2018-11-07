@@ -4,6 +4,7 @@ namespace shop\services\manage\Shop;
 
 use shop\forms\manage\Shop\Product\CategoriesForm;
 use shop\forms\manage\Shop\Product\ImportForm;
+use shop\forms\manage\Shop\Product\QuantityForm;
 use shop\forms\manage\Shop\Product\ModificationForm;
 use shop\repositories\Shop\BrandRepository;
 use shop\repositories\Shop\CategoryRepository;
@@ -56,6 +57,8 @@ class ProductManageService
             $form->code,
             $form->name,
             $form->description,
+            $form->weight,
+            $form->quantity->quantity,
             new Meta(
                 $form->meta->title,
                 $form->meta->description,
@@ -114,6 +117,7 @@ class ProductManageService
             $form->code,
             $form->name,
             $form->description,
+            $form->weight,
             new Meta(
                 $form->meta->title,
                 $form->meta->description,
@@ -161,6 +165,13 @@ class ProductManageService
             }
             $this->productRepository->save($product);
         });
+    }
+
+    public function changeQuantity($id, QuantityForm $form): void
+    {
+        $product = $this->productRepository->get($id);
+        $product->setQuantity($form->quantity);
+        $this->productRepository->save($product);
     }
 
     public function changeCategories($id, CategoriesForm $form): void
@@ -212,7 +223,8 @@ class ProductManageService
         $product->addModification(
             $form->code,
             $form->name,
-            $form->price
+            $form->price,
+            $form->quantity
         );
         $this->productRepository->save($product);
     }
@@ -224,7 +236,8 @@ class ProductManageService
             $modificationId,
             $form->code,
             $form->name,
-            $form->price
+            $form->price,
+            $form->quantity
         );
         $this->productRepository->save($product);
     }
