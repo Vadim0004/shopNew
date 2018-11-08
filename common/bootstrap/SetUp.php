@@ -8,6 +8,9 @@ use shop\services\ContactService;
 use yii\base\BootstrapInterface;
 use yii\di\Instance;
 use yii\mail\MailerInterface;
+use shop\cart\Cart;
+use shop\cart\cost\calculator\SimpleCost;
+use shop\cart\storage\SessionStorage;
 use Yii;
 
 class SetUp implements BootstrapInterface
@@ -40,5 +43,12 @@ class SetUp implements BootstrapInterface
             $app->params['adminEmail'],
             Instance::of(MailerInterface::class)
         ]);
+
+        $container->setSingleton(Cart::class, function () {
+            return new Cart(
+                new SessionStorage('cart'),
+                new SimpleCost()
+            );
+        });
     }
 }
