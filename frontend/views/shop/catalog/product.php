@@ -122,8 +122,6 @@ MagnificPopupAsset::register($this);
                 <hr>
                 <h3>Available Options</h3>
 
-                <?= $form->field($cartForm, 'quantity')->textInput() ?>
-
                 <?php $form = ActiveForm::begin([
                 'action' => ['/shop/cart/add', 'id' => $product->id],
             ]) ?>
