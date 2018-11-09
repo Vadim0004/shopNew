@@ -8,6 +8,7 @@ use shop\services\ContactService;
 use yii\base\BootstrapInterface;
 use yii\di\Instance;
 use yii\mail\MailerInterface;
+use shop\cart\cost\calculator\DynamicCost;
 use shop\cart\Cart;
 use shop\cart\cost\calculator\SimpleCost;
 use shop\cart\storage\SessionStorage;
@@ -47,7 +48,7 @@ class SetUp implements BootstrapInterface
         $container->setSingleton(Cart::class, function () {
             return new Cart(
                 new SessionStorage('cart'),
-                new SimpleCost()
+                new DynamicCost(new SimpleCost())
             );
         });
     }
