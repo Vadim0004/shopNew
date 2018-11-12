@@ -5,12 +5,21 @@ namespace backend\controllers\shop;
 use backend\forms\Shop\DiscountSearch;
 use shop\entities\Shop\Discount;
 use shop\forms\manage\Shop\DiscountForm;
+use shop\services\manage\Shop\DiscountManageService;
 use yii\web\Controller;
 use shop\repositories\NotFoundException;
 use Yii;
 
 class DiscountController extends Controller
 {
+    public $service;
+
+    public function __construct($id, $module, DiscountManageService $service, $config = [])
+    {
+        $this->service = $service;
+        parent::__construct($id, $module, $config);
+    }
+
     public function actionIndex()
     {
         $searchModel = new DiscountSearch();
@@ -27,12 +36,13 @@ class DiscountController extends Controller
         $form = new DiscountForm();
 
         if (Yii::$app->request->isPost && $form->load(Yii::$app->request->post()) && $form->validate()) {
-            echo '<pre>';
-            var_dump($form);
-            echo '</pre>';
-            die("\n");
-        } else {
-
+            try {
+                $discount = $this->service->create($form);
+                return $this->redirect(['view', 'id' => $discount->id]);
+            } catch (\DomainException $e) {
+                Yii::$app->errorHandler->logException($e);
+                Yii::$app->session->setFlash('error', $e->getMessage());
+            }
         }
 
         return $this->render('create', [
@@ -51,6 +61,6 @@ class DiscountController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundException('The requested page does not exist.');
     }
 }

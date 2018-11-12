@@ -11,12 +11,17 @@ class DiscountSearch extends Model
     public $id;
     public $name;
     public $active;
+    public $from_date;
+    public $to_date;
+    public $date_from;
+    public $date_to;
 
     public function rules(): array
     {
         return [
-            [['id', 'name', 'active'], 'integer'],
-            [['name'], 'safe'],
+            [['id', 'active'], 'integer'],
+            ['name', 'safe'],
+            [['from_date', 'to_date', 'date_from', 'date_to'], 'date', 'format' => 'php:Y-m-d'],
         ];
     }
     /**
@@ -29,7 +34,7 @@ class DiscountSearch extends Model
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => [
-                'defaultOrder' => ['sort' => SORT_ASC]
+                'defaultOrder' => ['sort' => SORT_DESC]
             ]
         ]);
         $this->load($params);
@@ -39,11 +44,15 @@ class DiscountSearch extends Model
         }
         $query->andFilterWhere([
             'id' => $this->id,
-            'name' => $this->name,
-            'active' => $this->active,
         ]);
-        $query
-            ->andFilterWhere(['like', 'name', $this->name]);
+
+        $query->andFilterWhere(['>=', 'from_date', $this->from_date]);
+        $query->andFilterWhere(['<=', 'from_date', $this->to_date]);
+        $query->andFilterWhere(['>=', 'to_date', $this->date_from]);
+        $query->andFilterWhere(['<=', 'to_date', $this->date_to]);
+        $query->andFilterWhere(['like', 'name', $this->name]);
+        $query->andFilterWhere(['like', 'active', $this->active]);
+
         return $dataProvider;
     }
 

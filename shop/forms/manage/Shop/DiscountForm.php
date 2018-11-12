@@ -36,7 +36,7 @@ class DiscountForm extends Model
     {
         return [
             [['name', 'from_date', 'to_date', 'percent'], 'required'],
-            [['from_date', 'to_date'], 'date', 'format' => 'php:j-F-Y'],
+            [['from_date', 'to_date'], 'date', 'format' => 'php:Y-m-d'],
             [['active'], 'boolean'],
             [['sort'], 'integer'],
             [['name'], 'unique', 'targetClass' => Discount::class, 'filter' => $this->_discount ? ['<>', 'id', $this->_discount->id] : null]

@@ -16,22 +16,26 @@ use kartik\date\DatePicker;
         <div class="box-body">
             <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
             <?= $form->field($model, 'percent')->textInput(['maxlength' => true]) ?>
+
             <?= $form->field($model, 'from_date')->widget(DatePicker::class, [
                 'name' => 'dp_2',
                 'type' => DatePicker::TYPE_COMPONENT_PREPEND,
+                'convertFormat' => true,
                 'value' => $model->from_date,
                 'pluginOptions' => [
                     'autoclose' => true,
-                    'format' => 'dd-M-yyyy'
+                    'format' => 'yyyy-MM-dd'
                 ]
             ]); ?>
+
             <?= $form->field($model, 'to_date')->widget(DatePicker::class, [
                 'name' => 'dp_2',
                 'type' => DatePicker::TYPE_COMPONENT_PREPEND,
-                'value' => $model->from_date,
+                'convertFormat' => true,
+                'value' => $model->to_date,
                 'pluginOptions' => [
                     'autoclose' => true,
-                    'format' => 'dd-M-yyyy'
+                    'format' => 'yyyy-MM-dd'
                 ]
             ]); ?>
             <?= $form->field($model, 'active')->checkbox() ?>
