@@ -28,13 +28,14 @@ class Discount extends ActiveRecord
         return $discount;
     }
 
-    public function edit($percent, $name, $fromDate, $toDate, $sort): void
+    public function edit($percent, $name, $fromDate, $toDate, $sort, $active): void
     {
         $this->percent = $percent;
         $this->name = $name;
         $this->from_date = $fromDate;
         $this->to_date = $toDate;
         $this->sort = $sort;
+        $this->active = $active;
     }
 
     public function activate(): void

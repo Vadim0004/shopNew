@@ -29,8 +29,23 @@ class DiscountManageService
         return $discount;
     }
 
-    public function edite()
+    public function edit($id, DiscountForm $form): void
     {
+        $discount = $this->discountRepository->get($id);
+        $discount->edit(
+            $form->percent,
+            $form->name,
+            $form->from_date,
+            $form->to_date,
+            $form->sort,
+            $form->active
+        );
+        $this->discountRepository->save($discount);
+    }
 
+    public function remove($id): void
+    {
+        $discount = $this->discountRepository->get($id);
+        $this->discountRepository->remove($discount);
     }
 }
