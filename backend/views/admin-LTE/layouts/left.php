@@ -39,6 +39,7 @@
                         ['label' => 'Product', 'icon' => 'file-o', 'url' => ['/shop/product/index'], 'active' => $this->context->id == 'shop/product'],
                         ['label' => 'Import/Export', 'icon' => 'file-o', 'url' => ['/shop/import-export/import-product'], 'active' => $this->context->id == 'shop/import-export'],
                         ['label' => 'Discount', 'icon' => 'file-o', 'url' => ['/shop/discount/index'], 'active' => $this->context->id == 'shop/discount'],
+                        ['label' => 'Delivery Methods', 'icon' => 'file-o', 'url' => ['/shop/delivery/index'], 'active' => $this->context->id == 'shop/delivery'],
                     ]],
                     ['label' => 'Users', 'icon' => 'user', 'url' => ['/user/index'], 'active' => $this->context->id == 'user/index'],
                 ],
