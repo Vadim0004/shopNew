@@ -50,6 +50,11 @@ class CartItem
         return null;
     }
 
+    public function getWeight(): int
+    {
+        return $this->product->weight * $this->quantity;
+    }
+
     public function getQuantity(): int
     {
         return $this->quantity;
