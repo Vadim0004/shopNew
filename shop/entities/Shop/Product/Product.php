@@ -147,6 +147,24 @@ class Product extends ActiveRecord
         return $quantity <= $this->quantity;
     }
 
+    public function checkout($modificationId, $quantity): void
+    {
+        if ($modificationId) {
+            $modifications = $this->modifications;
+            foreach ($modifications as $i => $modification) {
+                if ($modification->isIdEqualTo($modificationId)) {
+                    $modification->checkout($quantity);
+                    $this->updateModifications($modifications);
+                    return;
+                }
+            }
+        }
+        if ($quantity > $this->quantity) {
+            throw new \DomainException('Only ' . $this->quantity . ' items are available.');
+        }
+        $this->quantity -= $quantity;
+    }
+
     public function activateFeatured(): void
     {
         if ($this->isActiveFeatured()) {
@@ -442,7 +460,7 @@ class Product extends ActiveRecord
     {
         $reviews = $this->reviews;
         $reviews[] = Review::create($userId, $vote, $text);
-        $this->updateReviews($reviews);
+        $this->setReviews($reviews);
     }
 
     public function editReview($id, $vote, $text): void
@@ -463,7 +481,7 @@ class Product extends ActiveRecord
         $reviews = $this->reviews;
         foreach ($reviews as $i => $review) {
             if ($review->isIdEqualTo($id)) {
-                $review->active();
+                $review->activate();
                 $this->setReviews($reviews);
                 return;
             }
