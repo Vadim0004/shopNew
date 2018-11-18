@@ -1,4 +1,4 @@
-<?php
+<div class="user-index"><?php
 
 use shop\entities\Shop\Order\Order;
 use shop\helpers\OrderHelper;
@@ -14,6 +14,11 @@ $this->title = 'Orders';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-index">
+
+    <p>
+        <?= Html::a('Export', ['export'], ['class' => 'btn btn-primary', 'data-method' => 'post', 'data-confirm' => 'Export?']) ?>
+    </p>
+
     <div class="box">
         <div class="box-body">
             <?= GridView::widget([

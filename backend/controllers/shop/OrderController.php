@@ -28,6 +28,7 @@ class OrderController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                    'export' => ['POST'],
                 ],
             ],
         ];
@@ -93,6 +94,32 @@ class OrderController extends Controller
             Yii::$app->session->setFlash('error', $e->getMessage());
         }
         return $this->redirect(['index']);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function actionExport()
+    {
+        $query = Order::find()->orderBy(['id' => SORT_DESC]);
+
+        $objPHPExcel = new \PHPExcel();
+
+        $worksheet = $objPHPExcel->getActiveSheet();
+
+        foreach ($query->each() as $row => $order) {
+            /** @var Order $order */
+            $worksheet->setCellValueByColumnAndRow(0, $row + 1, $order->id);
+            $worksheet->setCellValueByColumnAndRow(1, $row + 1, date('Y-m-d H:i:s', $order->created_at));
+            $worksheet->setCellValueByColumnAndRow(2, $row + 1, $order->user_id);
+            $worksheet->setCellValueByColumnAndRow(3, $row + 1, $order->cost);
+        }
+
+        $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+        $file = tempnam(sys_get_temp_dir(), 'export');
+        $objWriter->save($file);
+
+        return Yii::$app->response->sendFile($file, 'report.xlsx');
     }
 
     /**
