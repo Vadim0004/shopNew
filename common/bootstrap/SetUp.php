@@ -13,6 +13,7 @@ use shop\cart\Cart;
 use shop\cart\cost\calculator\SimpleCost;
 use shop\cart\storage\CookieStorage;
 use shop\cart\storage\SessionStorage;
+use yii\rbac\ManagerInterface;
 use Yii;
 
 class SetUp implements BootstrapInterface
@@ -25,6 +26,10 @@ class SetUp implements BootstrapInterface
             return new PasswordResetService([Yii::$app->params['adminEmail'] => Yii::$app->name . ' robot']);
         });
         */
+
+        $container->setSingleton(ManagerInterface::class, function () use ($app) {
+            return $app->authManager;
+        });
 
         $container->setSingleton(MailerInterface::class, function () use ($app) {
             return $app->mailer;

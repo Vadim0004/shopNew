@@ -2,8 +2,11 @@
 
 namespace shop\services\auth;
 
+use shop\access\Rbac;
 use shop\entities\User\User;
 use shop\repositories\UserRepository;
+use shop\services\RoleManager;
+use shop\services\TransactionManager;
 use shop\forms\auth\SignupForm;
 use yii\mail\MailerInterface;
 use Yii;
@@ -13,12 +16,21 @@ class SignupService
     private $mailer;
     private $userRepository;
     private $adminEmail;
+    private $roles;
+    private $transaction;
 
-    public function __construct($adminEmail, MailerInterface $mailer, UserRepository $userRepository)
+    public function __construct(
+        $adminEmail,
+        MailerInterface $mailer,
+        UserRepository $userRepository,
+        RoleManager $roles,
+        TransactionManager $transaction)
     {
         $this->adminEmail = $adminEmail;
         $this->userRepository = $userRepository;
         $this->mailer = $mailer;
+        $this->roles = $roles;
+        $this->transaction = $transaction;
     }
 
     public function signup(SignupForm $form)
@@ -28,7 +40,12 @@ class SignupService
             $form->email,
             $form->password
         );
-        $this->userRepository->save($user);
+
+        $this->transaction->wrap(function () use ($user) {
+            $this->userRepository->save($user);
+            $this->roles->assign($user->id, Rbac::ROLE_USER);
+        });
+
         $sent = $this->mailer
             ->compose(
                 ['html' => 'auth/signup/emailConfirmToken-html', 'text' => 'auth/signup/emailConfirmToken-text'],

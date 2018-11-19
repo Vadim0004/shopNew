@@ -28,7 +28,9 @@
         "bower-asset/font-awesome": "~4.7",
         "bower-asset/owl.carousel": "^2.3",
         "bower-asset/magnific-popup": "^1.1",
-        "phpoffice/phpexcel": "^1.8"
+        "phpoffice/phpexcel": "^1.8",
+        "mihaildev/yii2-elfinder": "^1.2",
+        "fishvision/yii2-migrate": "^1.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

@@ -6,7 +6,6 @@ use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use shop\entities\User\User;
 use yii\helpers\ArrayHelper;
-use yii;
 
 class UserSearch extends Model
 {
