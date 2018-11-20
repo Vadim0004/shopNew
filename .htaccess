@@ -1,5 +1,13 @@
 RewriteEngine On
- 
+# prevent directory listings
+Options -Indexes
+IndexIgnore */*
+
+# follow symbolic links
+Options FollowSymlinks
+
+RewriteCond %{HTTP_HOST} ^api.shopnew [NC]
+RewriteRule ^(.*)$ api/web/$1 [L,PT]
 # rewrite for the frontend  - основной редирект в frontend/web
 RewriteCond %{REQUEST_URI} !^/(backend/web|admin)
 RewriteRule !^frontend/web /frontend/web%{REQUEST_URI} [L]
