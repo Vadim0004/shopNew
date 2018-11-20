@@ -7,6 +7,7 @@ use shop\services\auth\AuthService;
 use shop\forms\auth\LoginForm;
 use yii\filters\VerbFilter;
 use yii;
+use common\auth\Identity;
 
 class AuthController extends Controller
 {
@@ -46,7 +47,7 @@ class AuthController extends Controller
         if ($form->load(Yii::$app->request->post()) && $form->validate()) {
             try {
                 $user = $this->authService->auth($form);
-                Yii::$app->user->login($user, $form->rememberMe ? 3600 * 24 * 30 : 0);
+                Yii::$app->user->login(new Identity($user), $form->rememberMe ? 3600 * 24 * 30 : 0);
                 return $this->redirect(['site/index']);
             } catch (\DomainException $e) {
                 Yii::$app->errorHandler->logException($e);

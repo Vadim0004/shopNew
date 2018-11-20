@@ -8,6 +8,7 @@ use yii\authclient\ClientInterface;
 use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\authclient\AuthAction;
+use common\auth\Identity;
 
 class NetworkController extends Controller
 {
@@ -36,7 +37,7 @@ class NetworkController extends Controller
         $identity = ArrayHelper::getValue($attributes, 'id');
         try {
             $user = $this->networkService->auth($network, $identity);
-            Yii::$app->user->login($user, Yii::$app->params['user.rememberMeDuration']);
+            Yii::$app->user->login(new Identity($user), Yii::$app->params['user.rememberMeDuration']);
         } catch (\DomainException $e) {
             Yii::$app->errorHandler->logException($e);
             Yii::$app->session->setFlash('error', $e->getMessage());
