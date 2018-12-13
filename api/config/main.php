@@ -8,10 +8,6 @@ $params = array_merge(
 return [
     'id' => 'app-api',
     'basePath' => dirname(__DIR__),
-    'aliases' => [
-        '@staticRoot' => $params['staticPath'],
-        '@static' => $params['staticHostInfo'],
-    ],
     'controllerNamespace' => 'api\controllers',
     'bootstrap' => [
         'log',
@@ -78,6 +74,7 @@ return [
             'showScriptName' => false,
             'rules' => [
                 '' => 'site/index',
+                'profile' => 'user/profile/index',
                 'POST oauth2/<action:\w+>' => 'oauth2/rest/<action>',
             ],
         ],
