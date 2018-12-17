@@ -5,11 +5,16 @@
 
 \frontend\assets\OwlCarouselAsset::register($this);
 use frontend\widgets\shop\FeaturedProductsWidget;
+use frontend\widgets\shop\SliderWidget;
 ?>
 
 <?php $this->beginContent('@frontend/views/layouts/main.php') ?>
+
+<?= SliderWidget::widget() ?>
+
 <div class="row">
     <div id="content" class="col-sm-12">
+        <!--
         <div id="slideshow0" class="owl-carousel" style="opacity: 1;">
             <div class="item">
                 <a href="index.php?route=product/product&amp;path=57&amp;product_id=49"><img
@@ -21,6 +26,7 @@ use frontend\widgets\shop\FeaturedProductsWidget;
                      alt="MacBookAir" class="img-responsive"/>
             </div>
         </div>
+        -->
         <?= FeaturedProductsWidget::widget([
                 'limit' => Yii::$app->params['limitFeaturedProducts'],
         ]) ?>
