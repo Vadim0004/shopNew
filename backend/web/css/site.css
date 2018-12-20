@@ -123,3 +123,9 @@ div.required label.control-label:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+.modalButton {
+    color: #ffffff !important;
+    background-color: #da800a;
+    background-image: linear-gradient(to bottom, #da800a, #da790b);
+}

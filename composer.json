@@ -15,7 +15,7 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=7.1.0",
-        "yiisoft/yii2": "~2.0.6",
+        "yiisoft/yii2": "~2.0.14",
         "yiisoft/yii2-bootstrap": "~2.0.0",
         "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
         "kartik-v/yii2-widgets": "*",
@@ -29,10 +29,11 @@
         "bower-asset/owl.carousel": "^2.3",
         "bower-asset/magnific-popup": "^1.1",
         "phpoffice/phpexcel": "^1.8",
-        "mihaildev/yii2-elfinder": "^1.2",
         "fishvision/yii2-migrate": "^1.0",
         "guzzlehttp/guzzle": "^6.2",
-        "filsh/yii2-oauth2-server": "^2.0"
+        "filsh/yii2-oauth2-server": "^2.0.1",
+        "mihaildev/yii2-ckeditor": "*",
+        "mihaildev/yii2-elfinder": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",
