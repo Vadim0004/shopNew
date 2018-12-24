@@ -55,7 +55,7 @@ class InfoPage extends ActiveRecord
         return $infoPage;
     }
 
-    public function edit($name, $title, $slug, $main_content, $description, $sort, $additional_data, Meta $meta): void
+    public function edit($name, $title, $slug, $main_content, $description, $sort, $additional_data, $sliderName, Meta $meta): void
     {
         $this->name = $name;
         $this->title = $title;
@@ -64,6 +64,11 @@ class InfoPage extends ActiveRecord
         $this->description = $description;
         $this->sort = $sort;
         $this->additional_data = $additional_data;
+        if ($sliderName) {
+            $this->slider_name = $sliderName;
+        } else {
+            $this->slider_name = null;
+        }
         $this->update_at = time();
         $this->meta = $meta;
     }

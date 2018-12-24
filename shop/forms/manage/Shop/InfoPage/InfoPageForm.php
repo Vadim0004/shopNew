@@ -39,6 +39,7 @@ class InfoPageForm extends CompositeForm
             $this->description = $infoPage->description;
             $this->sort = $infoPage->sort;
             $this->sys_id = $infoPage->sys_id;
+            $this->slider_name = $infoPage->slider_name;
             $this->additional_data = $infoPage->additional_data;
             $this->meta = new MetaForm($infoPage->meta);
             $this->_infoPage = $infoPage;
@@ -65,8 +66,8 @@ class InfoPageForm extends CompositeForm
         return ['meta'];
     }
 
-    public function getSliderNames()
+    public function getSliderList(): array
     {
-        return array_merge(['' => 'Please select'], ArrayHelper::map($this->sliderRepository->getSliderNames(), 'name', 'name'));
+        return ArrayHelper::map($this->sliderRepository->getSliderList(), 'name', 'name');
     }
 }

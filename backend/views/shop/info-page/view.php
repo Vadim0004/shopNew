@@ -61,6 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attribute' => 'statuses.created_at',
                         'value' => Yii::$app->formatter->asTime(ArrayHelper::getValue($infoPage->statuses[0], 'created_at'), 'h:i:s'),
                     ],
+                    'slider_name',
                 ],
             ]) ?>
         </div>

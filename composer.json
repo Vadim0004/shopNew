@@ -24,7 +24,7 @@
         "la-haute-societe/yii2-save-relations-behavior": "^1.2",
         "yiisoft/yii2-authclient": "^2.1",
         "paulzi/yii2-nested-sets": "^1.1",
-        "yii-dream-team/yii2-upload-behavior": "^1.1",
+        "yii-dream-team/yii2-upload-behavior": "*",
         "bower-asset/font-awesome": "~4.7",
         "bower-asset/owl.carousel": "^2.3",
         "bower-asset/magnific-popup": "^1.1",

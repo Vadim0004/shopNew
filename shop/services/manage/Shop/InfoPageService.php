@@ -51,6 +51,7 @@ class InfoPageService
             $form->description,
             $form->sort,
             $form->additional_data,
+            $form->slider_name,
             new Meta(
                 $form->meta->title,
                 $form->meta->description,

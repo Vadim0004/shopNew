@@ -31,9 +31,9 @@ class SliderRepository
     /**
      * @return array|\yii\db\ActiveRecord[]
      */
-    public function getSliderNames()
+    public function getSliderList()
     {
-        $sliderName = Slider::find()->select('name')->distinct()->all();
-        return $sliderName;
+        $slider = Slider::find()->orderBy('name')->asArray()->all();
+        return $slider;
     }
 }

@@ -22,7 +22,7 @@ use mihaildev\elfinder\ElFinder;
             <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
             <?= $form->field($model, 'sort')->textInput(['maxlength' => true]) ?>
-            <?= $form->field($model, 'slider_name')->dropDownList($model->getSliderNames()) ?>
+            <?= $form->field($model, 'slider_name')->dropDownList($model->getSliderList(), ['prompt' => 'Please select']) ?>
             <?= $form->field($model, 'additional_data')->textInput(['maxlength' => true]) ?>
         </div>
     </div>

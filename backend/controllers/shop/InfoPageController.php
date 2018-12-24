@@ -10,6 +10,7 @@ use backend\forms\Shop\InfoPageSearch;
 use shop\forms\manage\Shop\InfoPage\InfoPageForm;
 use shop\services\manage\Shop\InfoPageService;
 use shop\forms\manage\Shop\InfoPage\InfoPageStatusForm;
+use yii\filters\VerbFilter;
 
 class InfoPageController extends Controller
 {
@@ -19,6 +20,21 @@ class InfoPageController extends Controller
     {
         $this->service = $service;
         parent::__construct($id, $module, $config);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::class,
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+        ];
     }
 
     public function actionIndex()
