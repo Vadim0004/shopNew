@@ -28,4 +28,15 @@ class InfoPageRepository
             throw new \RuntimeException('Removing error.');
         }
     }
+
+    public function getSliderToInfoPage(string $sliderId)
+    {
+        $infoPage = InfoPage::find()->select(['id', 'name', 'slider_name', 'sys_statuses_json'])->where(['slider_name' => $sliderId])->one();
+        /** @var InfoPage $infoPage*/
+        if ($infoPage) {
+            throw new \DomainException("This slider is already attach to Info page '$infoPage->name'");
+        } else {
+            return $infoPage;
+        }
+    }
 }
