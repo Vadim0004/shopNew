@@ -55,7 +55,8 @@ class InfoPageForm extends CompositeForm
     {
         return [
             [['name', 'slug', 'sort'], 'required'],
-            [['name', 'slug', 'title', 'main_content', 'description', 'additional_data', 'slider_name'], 'string', 'max' => 255],
+            [['main_content', 'description'], 'string'],
+            [['name', 'slug', 'title', 'additional_data', 'slider_name'], 'string', 'max' => 255],
             ['slug', SlugValidator::class],
             [['name', 'slug'], 'unique', 'targetClass' => InfoPage::class, 'filter' => $this->_infoPage ? ['<>', 'id', $this->_infoPage->id] : null]
         ];

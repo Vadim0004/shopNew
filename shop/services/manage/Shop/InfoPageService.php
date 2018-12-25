@@ -26,6 +26,7 @@ class InfoPageService
             $form->name,
             $form->title,
             $form->slug,
+            $form->slider_name,
             $form->main_content,
             $form->description,
             $form->sort,

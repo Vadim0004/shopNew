@@ -12,6 +12,8 @@ use common\widgets\Alert;
 use yii\bootstrap\NavBar;
 use yii\bootstrap\Nav;
 use frontend\widgets\Shop\CartWidget;
+use frontend\widgets\shop\InfoPageWidget;
+use shop\entities\Shop\InfoPage\InfoPageStatus;
 
 AppAsset::register($this);
 OwlCarouselAsset::register($this);
@@ -156,44 +158,29 @@ OwlCarouselAsset::register($this);
 <footer>
     <div class="container">
         <div class="row">
-            <div class="col-sm-3">
-                <h5>Information</h5>
-                <ul class="list-unstyled">
-                    <li><a href="/index.php?route=information/information&amp;information_id=4">About
-                            Us</a></li>
-                    <li><a href="/index.php?route=information/information&amp;information_id=6">Delivery
-                            Information</a></li>
-                    <li><a href="/index.php?route=information/information&amp;information_id=3">Privacy
-                            Policy</a></li>
-                    <li><a href="/index.php?route=information/information&amp;information_id=5">Terms
-                            &amp; Conditions</a></li>
-                </ul>
+            <div class="col-lg-3">
+                <h5>Other</h5>
+                <?= InfoPageWidget::widget([
+                    'pageStatus' => InfoPageStatus::PAGE_OTHER,
+                ]) ?>
             </div>
-            <div class="col-sm-3">
-                <h5>Customer Service</h5>
-                <ul class="list-unstyled">
-                    <li><a href="/index.php?route=information/contact">Contact Us</a></li>
-                    <li><a href="/index.php?route=account/return/add">Returns</a></li>
-                    <li><a href="/index.php?route=information/sitemap">Site Map</a></li>
-                </ul>
+            <div class="col-lg-3">
+                <h5>Main</h5>
+                <?= InfoPageWidget::widget([
+                    'pageStatus' => InfoPageStatus::PAGE_MAIN,
+                ]) ?>
             </div>
-            <div class="col-sm-3">
-                <h5>Extras</h5>
-                <ul class="list-unstyled">
-                    <li><a href="/index.php?route=product/manufacturer">Brands</a></li>
-                    <li><a href="/index.php?route=account/voucher">Gift Certificates</a></li>
-                    <li><a href="/index.php?route=affiliate/account">Affiliates</a></li>
-                    <li><a href="/index.php?route=product/special">Specials</a></li>
-                </ul>
+            <div class="col-lg-3">
+                <h5>Contact</h5>
+                <?= InfoPageWidget::widget([
+                    'pageStatus' => InfoPageStatus::PAGE_CONTACT,
+                ]) ?>
             </div>
-            <div class="col-sm-3">
-                <h5>My Account</h5>
-                <ul class="list-unstyled">
-                    <li><a href="/index.php?route=account/account">My Account</a></li>
-                    <li><a href="/index.php?route=account/order">Order History</a></li>
-                    <li><a href="/index.php?route=account/wishlist">Wish List</a></li>
-                    <li><a href="/index.php?route=account/newsletter">Newsletter</a></li>
-                </ul>
+            <div class="col-lg-3">
+                <h5>About</h5>
+                <?= InfoPageWidget::widget([
+                    'pageStatus' => InfoPageStatus::PAGE_ABOUT,
+                ]) ?>
             </div>
         </div>
         <hr>

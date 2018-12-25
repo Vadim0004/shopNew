@@ -310,6 +310,10 @@ div.required .control-label:before {
 #content {
     min-height: 600px;
 }
+/* infoPage */
+#infoPage {
+    min-height: 100px;
+}
 /* footer */
 footer {
     margin-top: 30px;

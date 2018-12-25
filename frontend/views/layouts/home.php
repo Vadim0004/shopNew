@@ -4,8 +4,10 @@
 /* @var $content string */
 
 \frontend\assets\OwlCarouselAsset::register($this);
+
 use frontend\widgets\shop\FeaturedProductsWidget;
 use frontend\widgets\shop\SliderWidget;
+
 ?>
 
 <?php $this->beginContent('@frontend/views/layouts/main.php') ?>
@@ -30,6 +32,7 @@ use frontend\widgets\shop\SliderWidget;
         <?= FeaturedProductsWidget::widget([
                 'limit' => Yii::$app->params['limitFeaturedProducts'],
         ]) ?>
+
         <div id="carousel0" class="owl-carousel">
             <div class="item text-center">
                 <img src="<?= "/frontend/web/image/catalog/demo/manufacturer/nfl.png" ?>" alt="NFL"

@@ -7,7 +7,7 @@ use yii\db\ActiveRecord;
 use shop\entities\Meta;
 use shop\entities\behaviors\MetaBehavior;
 use shop\entities\behaviors\InfoPageBehavior;
-
+use shop\entities\Shop\InfoPage\queries\InfoPageQuery;
 /**
  * This is the model class for table "shop_info_pages".
  *
@@ -38,12 +38,13 @@ class InfoPage extends ActiveRecord
     const STATUS_ACTIVE = 1;
     const STATUS_DRAFT = 0;
 
-    public static function create($name, $title, $slug, $main_content, $description, $sort, $additional_data, Meta $meta): self
+    public static function create($name, $title, $slug, $sliderName, $main_content, $description, $sort, $additional_data, Meta $meta): self
     {
         $infoPage = new static();
         $infoPage->name = $name;
         $infoPage->title = $title;
         $infoPage->slug = $slug;
+        $infoPage->slider_name = $sliderName;
         $infoPage->main_content = $main_content;
         $infoPage->description = $description;
         $infoPage->sort = $sort;
@@ -151,5 +152,10 @@ class InfoPage extends ActiveRecord
     public function getSliderName()
     {
         return $this->hasOne(Slider::class, ['name' => 'slider_name']);
+    }
+
+    public static function find(): InfoPageQuery
+    {
+        return new InfoPageQuery(static::class);
     }
 }
