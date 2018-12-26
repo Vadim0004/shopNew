@@ -34,6 +34,7 @@ class BrandController extends Controller
                 'class' => VerbFilter::class,
                 'actions' => [
                     'delete' => ['POST'],
+                    'multiple-delete' => ['POST'],
                 ],
             ],
         ];
@@ -119,6 +120,20 @@ class BrandController extends Controller
             Yii::$app->session->setFlash('error', $e->getMessage());
         }
         return $this->redirect(['index']);
+    }
+
+    public function actionMultipleDelete()
+    {
+        if (yii::$app->request->isAjax) {
+            $post = Yii::$app->request->post();
+            try {
+                $this->brandManageService->multipleRemove($post);
+            } catch (\DomainException $e) {
+                Yii::$app->errorHandler->logException($e);
+                Yii::$app->session->setFlash('error', $e->getMessage());
+            }
+            return $this->redirect(['index']);
+        }
     }
 
     /**

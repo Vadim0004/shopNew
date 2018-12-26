@@ -51,4 +51,12 @@ class BrandManageService
         $tag = $this->brandRepository->get($id);
         $this->brandRepository->remove($tag);
     }
+
+    public function multipleRemove(array $brandsDelete): void
+    {
+        foreach ($brandsDelete['row_id'] as $i => $itemDelete) {
+            $brand = $this->brandRepository->get($itemDelete);
+            $this->brandRepository->remove($brand);
+        }
+    }
 }
