@@ -45,6 +45,7 @@
                         ['label' => 'Slider', 'icon' => 'file-o', 'url' => ['/shop/slider/index'], 'active' => $this->context->id == 'shop/slider'],
                     ]],
                     ['label' => 'Users', 'icon' => 'user', 'url' => ['/user/index'], 'active' => $this->context->id == 'user/index'],
+                    ['label' => 'Configuration', 'url' => ['/shop/configuration/index'], 'active' => $this->context->id == 'shop/configuration'],
                 ],
             ]
         ) ?>

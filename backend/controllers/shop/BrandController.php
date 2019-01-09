@@ -47,6 +47,10 @@ class BrandController extends Controller
     {
         $searchModel = new BrandSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->pagination = [
+            'pageSizeLimit' => [10, 100],
+            'pageSize' => 10,
+            ];
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
