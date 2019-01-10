@@ -37,14 +37,11 @@ class Configuration extends ActiveRecord
     /**
      * @param $configurationValue
      * @param $configurationDescription
-     * @return Configuration
      */
-    public function edit($configurationValue, $configurationDescription): self
+    public function edit($configurationValue, $configurationDescription): void
     {
-        $configuration = new static();
-        $configuration->configuration_value = $configurationValue;
-        $configuration->configuration_description = $configurationDescription;
-        return $configuration;
+        $this->configuration_value = $configurationValue;
+        $this->configuration_description = $configurationDescription;
     }
 
     /**
