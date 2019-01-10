@@ -31,6 +31,7 @@ class ConfigurationForm extends Model
         return [
             [['configuration_title', 'configuration_key'], 'required'],
             [['configuration_title', 'configuration_key'], 'string', 'max' => 64],
+            [['configuration_value'], 'string'],
             [['configuration_description'], 'string', 'max' => 255],
             [['configuration_title', 'configuration_key'], 'unique', 'targetClass' => Configuration::class, 'filter' => $this->_configuration ? ['<>', 'id', $this->_configuration->id] : null]
         ];
