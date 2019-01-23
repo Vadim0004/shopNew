@@ -46,6 +46,9 @@ class NpClient
             'headers' => [
                 'content-type' => 'application/json',
             ],
+            'json' => [
+                'apiKey' => $this->apiKey,
+            ]
         ];
 
     }
@@ -80,19 +83,19 @@ class NpClient
 
     public function get(array $options = [], array $headers = [])
     {
-        $response = $this->client->get($this->baseUrl, array_merge($options, $this->options, $headers));
+        $response = $this->client->get($this->baseUrl, array_merge($options, $this->arrayMergeMy($this->options, $options), $headers));
         return $this->parseResponseBody($response);
     }
 
     public function post(array $options = [], array $headers = [])
     {
-        $response = $this->client->post($this->baseUrl, array_merge($this->options, $options, $headers));
+        $response = $this->client->post($this->baseUrl, array_merge($this->options, $this->arrayMergeMy($this->options, $options), $headers));
         return $this->parseResponseBody($response);
     }
 
     public function delete(array $options = [], array $headers = [])
     {
-        $response = $this->client->delete($this->baseUrl, array_merge($this->options, $options, $headers));
+        $response = $this->client->delete($this->baseUrl, array_merge($this->options, $this->arrayMergeMy($this->options, $options), $headers));
         return $this->parseResponseBody($response);
     }
 
@@ -118,5 +121,16 @@ class NpClient
     protected function createJsonBody(array $parameters)
     {
         return (count($parameters) === 0) ? null : json_encode($parameters, empty($parameters) ? JSON_FORCE_OBJECT : 0);
+    }
+
+    /**
+     * @param array $array1
+     * @param array $array2
+     * @return array
+     */
+    protected function arrayMergeMy(array $array1, array $array2): array
+    {
+        $res['json'] = $array1['json'] + $array2['json'];
+        return $res;
     }
 }

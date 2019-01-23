@@ -17,13 +17,13 @@ class NpSearchSettlement implements NpModelName, NpCalledMethod
     private $methodProperties;
 
     /* data from From Np */
-    public $present;
-    public $warehouses;
-    public $mainDescription;
-    public $area;
-    public $ref;
-    public $deliveryCity;
-    public $parentRegionCode;
+    private $present;
+    private $warehouses;
+    private $mainDescription;
+    private $area;
+    private $ref;
+    private $deliveryCity;
+    private $parentRegionCode;
 
     use NpValueTrait;
 

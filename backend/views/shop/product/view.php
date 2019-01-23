@@ -42,8 +42,19 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
         ]) ?>
     </p>
-    <div class="row">
-        <div class="col-md-6">
+
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#common">Common</a></li>
+        <li><a data-toggle="tab" href="#characteristics">Characteristics</a></li>
+        <li><a data-toggle="tab" href="#description">Description</a></li>
+        <li><a data-toggle="tab" href="#modifications">Modifications</a></li>
+        <li><a data-toggle="tab" href="#seo">SEO</a></li>
+        <li><a data-toggle="tab" href="#photos">Photos</a></li>
+    </ul>
+
+    <div class="tab-content">
+
+        <div id="common" class="tab-pane fade in active">
             <div class="box">
                 <div class="box-header with-border">Common</div>
                 <div class="box-body">
@@ -108,7 +119,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+
+        <div id="characteristics" class="tab-pane fade">
             <div class="box box-default">
                 <div class="box-header with-border">Characteristics</div>
                 <div class="box-body">
@@ -124,108 +136,119 @@ $this->params['breadcrumbs'][] = $this->title;
                 </div>
             </div>
         </div>
-    </div>
-    <div class="box">
-        <div class="box-header with-border">Description</div>
-        <div class="box-body">
-            <?= Yii::$app->formatter->asNtext($product->description) ?>
-        </div>
-    </div>
-    <div class="box" id="modifications">
-        <div class="box-header with-border">Modifications</div>
-        <div class="box-body">
-            <p>
-                <?= Html::a('Add Modification', ['shop/modification/create', 'product_id' => $product->id], ['class' => 'btn btn-success']) ?>
-            </p>
-            <?= GridView::widget([
-                'dataProvider' => $modificationsProvider,
-                'columns' => [
-                    'code',
-                    'name',
-                    [
-                        'attribute' => 'price',
-                        'value' => function (Modification $model) {
-                            return PriceHelper::format($model->price);
-                        },
-                    ],
-                    'quantity',
-                    [
-                        'class' => ActionColumn::class,
-                        'controller' => 'shop/modification',
-                        'template' => '{update} {delete}',
-                    ],
-                ],
-            ]); ?>
-        </div>
-    </div>
 
-    <div class="box">
-        <div class="box-header with-border">SEO</div>
-        <div class="box-body">
-            <?= DetailView::widget([
-                'model' => $product,
-                'attributes' => [
-                    [
-                        'attribute' => 'meta.title',
-                        'value' => $product->meta->title,
-                    ],
-                    [
-                        'attribute' => 'meta.description',
-                        'value' => $product->meta->description,
-                    ],
-                    [
-                        'attribute' => 'meta.keywords',
-                        'value' => $product->meta->keywords,
-                    ],
-                ],
-            ]) ?>
+        <div id="description" class="tab-pane fade">
+            <div class="box box-default">
+                <div class="box-header with-border">Description</div>
+                    <div class="box-body">
+                    <?= Yii::$app->formatter->asNtext($product->description) ?>
+                </div>
+            </div>
         </div>
-    </div>
 
-    <div class="box" id="photos">
-        <div class="box-header with-border">Photos</div>
-        <div class="box-body">
-            <div class="row">
-                <?php foreach ($product->images as $photo): ?>
-                    <div class="col-md-2 col-xs-3" style="text-align: center">
-                        <div class="btn-group">
-                            <?= Html::a('<span class="glyphicon glyphicon-arrow-left"></span>', ['move-photo-up', 'id' => $product->id, 'photo_id' => $photo->id], [
-                                'class' => 'btn btn-default',
-                                'data-method' => 'post',
-                            ]); ?>
-                            <?= Html::a('<span class="glyphicon glyphicon-remove"></span>', ['delete-photo', 'id' => $product->id, 'photo_id' => $photo->id], [
-                                'class' => 'btn btn-default',
-                                'data-method' => 'post',
-                                'data-confirm' => 'Remove photo?',
-                            ]); ?>
-                            <?= Html::a('<span class="glyphicon glyphicon-arrow-right"></span>', ['move-photo-down', 'id' => $product->id, 'photo_id' => $photo->id], [
-                                'class' => 'btn btn-default',
-                                'data-method' => 'post',
-                            ]); ?>
-                        </div>
-                        <div>
-                            <?= Html::a(
-                                Html::img($photo->getThumbFileUrl('file', 'thumb')),
-                                $photo->getUploadedFileUrl('file'),
-                                ['class' => 'thumbnail', 'target' => '_blank']
-                            ) ?>
-                        </div>
+        <div id="modifications" class="tab-pane fade">
+            <div class="box box-default">
+                <div class="box-header with-border">Modifications</div>
+                <div class="box-body">
+                    <p>
+                        <?= Html::a('Add Modification', ['shop/modification/create', 'product_id' => $product->id], ['class' => 'btn btn-success']) ?>
+                    </p>
+                    <?= GridView::widget([
+                        'dataProvider' => $modificationsProvider,
+                        'columns' => [
+                            'code',
+                            'name',
+                            [
+                                'attribute' => 'price',
+                                'value' => function (Modification $model) {
+                                    return PriceHelper::format($model->price);
+                                },
+                            ],
+                            'quantity',
+                            [
+                                'class' => ActionColumn::class,
+                                'controller' => 'shop/modification',
+                                'template' => '{update} {delete}',
+                            ],
+                        ],
+                    ]); ?>
+                </div>
+            </div>
+        </div>
+
+        <div id="seo" class="tab-pane fade">
+            <div class="box">
+                <div class="box-header with-border">SEO</div>
+                <div class="box-body">
+                    <?= DetailView::widget([
+                        'model' => $product,
+                        'attributes' => [
+                            [
+                                'attribute' => 'meta.title',
+                                'value' => $product->meta->title,
+                            ],
+                            [
+                                'attribute' => 'meta.description',
+                                'value' => $product->meta->description,
+                            ],
+                            [
+                                'attribute' => 'meta.keywords',
+                                'value' => $product->meta->keywords,
+                            ],
+                        ],
+                    ]) ?>
+                </div>
+            </div>
+        </div>
+
+        <div id="photos" class="tab-pane fade">
+            <div class="box" id="photos">
+                <div class="box-header with-border">Photos</div>
+                <div class="box-body">
+                    <div class="row">
+                        <?php foreach ($product->images as $photo): ?>
+                            <div class="col-md-2 col-xs-3" style="text-align: center">
+                                <div class="btn-group">
+                                    <?= Html::a('<span class="glyphicon glyphicon-arrow-left"></span>', ['move-photo-up', 'id' => $product->id, 'photo_id' => $photo->id], [
+                                        'class' => 'btn btn-default',
+                                        'data-method' => 'post',
+                                    ]); ?>
+                                    <?= Html::a('<span class="glyphicon glyphicon-remove"></span>', ['delete-photo', 'id' => $product->id, 'photo_id' => $photo->id], [
+                                        'class' => 'btn btn-default',
+                                        'data-method' => 'post',
+                                        'data-confirm' => 'Remove photo?',
+                                    ]); ?>
+                                    <?= Html::a('<span class="glyphicon glyphicon-arrow-right"></span>', ['move-photo-down', 'id' => $product->id, 'photo_id' => $photo->id], [
+                                        'class' => 'btn btn-default',
+                                        'data-method' => 'post',
+                                    ]); ?>
+                                </div>
+                                <div>
+                                    <?= Html::a(
+                                        Html::img($photo->getThumbFileUrl('file', 'thumb')),
+                                        $photo->getUploadedFileUrl('file'),
+                                        ['class' => 'thumbnail', 'target' => '_blank']
+                                    ) ?>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
                     </div>
-                <?php endforeach; ?>
+                    <?php $form = ActiveForm::begin([
+                        'options' => ['enctype'=>'multipart/form-data'],
+                    ]); ?>
+                    <?= $form->field($photosForm, 'files[]')->label(false)->widget(FileInput::class, [
+                        'options' => [
+                            'accept' => 'image/*',
+                            'multiple' => true,
+                        ]
+                    ]) ?>
+                    <div class="form-group">
+                        <?= Html::submitButton('Upload', ['class' => 'btn btn-success']) ?>
+                    </div>
+                    <?php ActiveForm::end(); ?>
+                </div>
             </div>
-            <?php $form = ActiveForm::begin([
-                'options' => ['enctype'=>'multipart/form-data'],
-            ]); ?>
-            <?= $form->field($photosForm, 'files[]')->label(false)->widget(FileInput::class, [
-                'options' => [
-                    'accept' => 'image/*',
-                    'multiple' => true,
-                ]
-            ]) ?>
-            <div class="form-group">
-                <?= Html::submitButton('Upload', ['class' => 'btn btn-success']) ?>
-            </div>
-            <?php ActiveForm::end(); ?>
         </div>
+
     </div>
 </div>

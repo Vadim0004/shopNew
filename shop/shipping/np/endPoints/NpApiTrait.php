@@ -14,4 +14,18 @@ trait NpApiTrait
         }
         return $class;
     }
+
+    /**
+     * @param \stdClass $class
+     * @return \stdClass|\DomainException
+     */
+    public function validateErrors(\stdClass $class): ?\stdClass
+    {
+        if (isset($class->errors)) {
+            foreach ($class->errors as $error) {
+                throw new \DomainException("Error . $error");
+            }
+        }
+        return $class;
+    }
 }

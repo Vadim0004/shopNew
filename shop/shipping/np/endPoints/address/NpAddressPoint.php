@@ -6,6 +6,7 @@ use shop\shipping\np\endPoints\NpAbstractApi;
 use shop\shipping\np\endPoints\NpApiTrait;
 use shop\shipping\np\valueObject\getCities\NpGetCities;
 use shop\shipping\np\valueObject\searchSettlement\NpSearchSettlement;
+use shop\shipping\np\valueObject\searchSettlementStreets\NpSearchSettlementStreets;
 
 class NpAddressPoint extends NpAbstractApi
 {
@@ -21,13 +22,16 @@ class NpAddressPoint extends NpAbstractApi
             'json' => $search->toArray()
         ];
         $resultFromNp = $this->post($options);
-        $searchSettlement = $resultFromNp->data[0]->Addresses;
-        /** @var NpSearchSettlement[] */
-        $result = [];
-        foreach ($searchSettlement as $itemElement) {
-            $result[] = $this->objectToObject($itemElement, NpSearchSettlement::class);
+        $validate = $this->validateErrors($resultFromNp);
+        if ($validate) {
+            $searchSettlement = $resultFromNp->data[0]->Addresses;
+            /** @var NpSearchSettlement[] */
+            $result = [];
+            foreach ($searchSettlement as $itemElement) {
+                $result[] = $this->objectToObject($itemElement, NpSearchSettlement::class);
+            }
+            return $result;
         }
-        return $result;
     }
 
     /**
@@ -40,12 +44,37 @@ class NpAddressPoint extends NpAbstractApi
             'json' => $cities->toArray()
         ];
         $resultFromNp = $this->post($options);
-        $citiesElement = $resultFromNp->data;
-        /** @var NpGetCities[] */
-        $result = [];
-        foreach ($citiesElement as $itemElement) {
-            $result[] = $this->objectToObject($itemElement, NpGetCities::class);
+        $validate = $this->validateErrors($resultFromNp);
+        if ($validate) {
+            $citiesElement = $resultFromNp->data;
+            /** @var NpGetCities[] */
+            $result = [];
+            foreach ($citiesElement as $itemElement) {
+                $result[] = $this->objectToObject($itemElement, NpGetCities::class);
+            }
+            return $result;
         }
-        return $result;
+    }
+
+    /**
+     * @param NpSearchSettlementStreets $search
+     * @return mixed
+     */
+    public function createSearchSettlementStreets(NpSearchSettlementStreets $search): array
+    {
+        $options = [
+            'json' => $search->toArray()
+        ];
+        $resultFromNp = $this->post($options);
+        $validate = $this->validateErrors($resultFromNp);
+        if ($validate) {
+            $citiesElement = $resultFromNp->data;
+            /** @var NpSearchSettlementStreets[] */
+            $result = [];
+            foreach ($citiesElement as $itemElement) {
+                $result[] = $this->objectToObject($itemElement, NpSearchSettlementStreets::class);
+            }
+            return $result;
+        }
     }
 }

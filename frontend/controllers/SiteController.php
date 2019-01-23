@@ -2,11 +2,14 @@
 namespace frontend\controllers;
 
 use shop\shipping\np\helpers\NpGetCitiesHelper;
+use shop\shipping\np\helpers\NpSearchSettlementStreetsHelper;
 use shop\shipping\np\valueObject\getCities\NpGetCities;
 use shop\shipping\np\valueObject\searchSettlement\NpSearchSettlement;
+use shop\shipping\np\valueObject\searchSettlementStreets\NpSearchSettlementStreets;
 use yii\web\Controller;
 use shop\shipping\np\NpClient;
 use shop\shipping\np\helpers\NpSearchSettlementHelper;
+use yii;
 
 /**
  * Site controller
@@ -74,15 +77,21 @@ class SiteController extends Controller
 
     public function actionGetCities()
     {
-        $date = new NpGetCitiesHelper('getCities');
-        $cities = NpGetCities::createCities($date);
-        $result = $this->np->api('address')->createCities($cities);
-        foreach ($result as $item) {
-            /** @var $item NpGetCities */
-            echo '<pre>';
-            var_dump($item->getArea());
-            echo '</pre>';
-            die("\n");
+        try {
+            $date = new NpGetCitiesHelper('getCities');
+            $cities = NpGetCities::createCities($date);
+            $result = $this->np->api('address')->createCities($cities);
+            foreach ($result as $item) {
+                /** @var $item NpGetCities */
+                $dataStreet = new NpSearchSettlementStreetsHelper('searchSettlementStreets', $item->getRef(), 5, 'Nova');
+                $street = NpSearchSettlementStreets::createSearchSettlementStreets($dataStreet);
+                $resultStreet = $this->np->api('address')->createSearchSettlementStreets($street);
+            }
+        } catch (\DomainException $e) {
+            Yii::$app->errorHandler->logException($e);
+            Yii::$app->session->setFlash('error', $e->getMessage());
         }
+
+        return $this->render('index');
     }
 }
