@@ -16,5 +16,15 @@ return [
             'assignmentTable' => '{{%auth_assignments}}',
             'ruleTable' => '{{%auth_rules}}',
         ],
+        'authClientCollection' => [
+            'class' => 'yii\authclient\Collection',
+            'clients' => [
+                'facebook' => [
+                    'class' => 'yii\authclient\clients\GitHub',
+                    'clientId' => '00cf0a845a7cc18d146f',
+                    'clientSecret' => '4677fb62e50689caf55f5b7cac275cf9948b2031',
+                ],
+            ],
+        ],
     ],
 ];

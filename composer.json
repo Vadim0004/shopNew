@@ -26,6 +26,7 @@
         "paulzi/yii2-nested-sets": "^1.1",
         "yii-dream-team/yii2-upload-behavior": "*",
         "bower-asset/font-awesome": "~4.7",
+        "bower-asset/shufflejs":  "5.2.3",
         "bower-asset/owl.carousel": "^2.3",
         "bower-asset/magnific-popup": "^1.1",
         "phpoffice/phpexcel": "^1.8",
@@ -40,7 +41,8 @@
         "yiisoft/yii2-gii": "~2.0.0",
         "yiisoft/yii2-faker": "~2.0.0",
         "codeception/base": "^2.2.3",
-        "codeception/verify": "~0.3.1"
+        "codeception/verify": "~0.3.1",
+        "symfony/var-dumper": "^4.3"
     },
     "config": {
         "process-timeout": 1800,
